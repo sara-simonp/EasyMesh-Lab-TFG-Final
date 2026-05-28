@@ -22,3 +22,12 @@ services:
     volumes:
       - ./tr069-data:/data:ro
     restart: unless-stopped
+
+  pag-web:
+    image: nginx:alpine
+    container_name: pag-web
+    ports:
+      - "8181:80"
+    volumes:
+      - ./pag-web/index.html:/usr/share/nginx/html/index.html:ro
+    restart: unless-stopped

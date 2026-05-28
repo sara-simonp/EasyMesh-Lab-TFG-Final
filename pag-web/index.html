@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documentación interactiva - Laboratorio Docker EasyMesh TR-069 GenieACS</title>
+    <style>
+        :root {
+            --bg: #07111f;
+            --bg2: #0b1b31;
+            --panel: rgba(15, 23, 42, 0.88);
+            --panel2: rgba(30, 41, 59, 0.86);
+            --card: #f8fafc;
+            --cardText: #0f172a;
+            --muted: #94a3b8;
+            --text: #e5e7eb;
+            --blue: #38bdf8;
+            --blue2: #2563eb;
+            --green: #22c55e;
+            --orange: #fb923c;
+            --purple: #a78bfa;
+            --yellow: #facc15;
+            --red: #ef4444;
+            --gray: #64748b;
+            --line: rgba(226, 232, 240, 0.52);
+            --radius: 22px;
+            --shadow: 0 24px 60px rgba(0, 0, 0, .35);
+            --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: var(--sans);
+            background:
+                radial-gradient(circle at 10% 0%, rgba(56, 189, 248, 0.20), transparent 28%),
+                radial-gradient(circle at 90% 20%, rgba(167, 139, 250, 0.14), transparent 28%),
+                linear-gradient(180deg, var(--bg), var(--bg2));
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .app {
+            display: grid;
+            grid-template-columns: 315px minmax(0, 1fr);
+            min-height: 100vh;
+        }
+
+        aside {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            padding: 22px 18px;
+            background: rgba(2, 6, 23, .76);
+            border-right: 1px solid rgba(226, 232, 240, .12);
+            backdrop-filter: blur(14px);
+            overflow: auto;
+            z-index: 50;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 12px 18px;
+            border-bottom: 1px solid rgba(226, 232, 240, .12);
+            margin-bottom: 18px;
+        }
+
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, var(--blue2), var(--purple));
+            box-shadow: 0 10px 30px rgba(56, 189, 248, .22);
+            font-size: 22px;
+        }
+
+        .brand h1 {
+            margin: 0;
+            font-size: 17px;
+            line-height: 1.2;
+            letter-spacing: -.02em;
+        }
+
+        .brand small {
+            color: var(--muted);
+            display: block;
+            margin-top: 4px;
+        }
+
+        .folder-title {
+            margin: 18px 10px 10px;
+            color: #cbd5e1;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            font-weight: 900;
+        }
+
+        .folder-list {
+            display: grid;
+            gap: 8px;
+        }
+
+        .folder {
+            width: 100%;
+            border: 1px solid rgba(226, 232, 240, .10);
+            background: rgba(15, 23, 42, .74);
+            color: #e5e7eb;
+            border-radius: 16px;
+            padding: 12px 12px;
+            cursor: pointer;
+            display: grid;
+            grid-template-columns: 30px 1fr;
+            gap: 10px;
+            text-align: left;
+            transition: transform .15s ease, background .15s ease, border-color .15s ease;
+        }
+
+        .folder:hover,
+        .folder.active {
+            transform: translateX(3px);
+            background: rgba(30, 41, 59, .96);
+            border-color: rgba(56, 189, 248, .35);
+        }
+
+        .folder .emoji {
+            width: 30px;
+            height: 30px;
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            background: rgba(56, 189, 248, .14);
+        }
+
+        .folder strong {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 3px;
+        }
+
+        .folder span:last-child {
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.25;
+        }
+
+        .quick-status {
+            margin-top: 18px;
+            padding: 14px;
+            border-radius: 18px;
+            border: 1px solid rgba(34, 197, 94, .24);
+            background: rgba(34, 197, 94, .09);
+            color: #bbf7d0;
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        .quick-status strong {
+            color: #dcfce7;
+        }
+
+        main {
+            padding: 30px;
+            overflow: hidden;
+        }
+
+        .hero {
+            border: 1px solid rgba(226, 232, 240, .12);
+            border-radius: 30px;
+            background: linear-gradient(135deg, rgba(15, 23, 42, .92), rgba(30, 41, 59, .72));
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 24px;
+        }
+
+        .hero-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .hero h2 {
+            margin: 0;
+            font-size: clamp(28px, 4vw, 48px);
+            line-height: 1.02;
+            letter-spacing: -.05em;
+        }
+
+        .hero p {
+            max-width: 920px;
+            margin: 14px 0 0;
+            color: #cbd5e1;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .pill {
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+            padding: 10px 14px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 900;
+            background: rgba(34, 197, 94, .12);
+            color: #bbf7d0;
+            border: 1px solid rgba(34, 197, 94, .28);
+            white-space: nowrap;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 18px var(--green);
+        }
+
+        .hero-grid {
+            margin-top: 24px;
+            display: grid;
+            grid-template-columns: repeat(4, minmax(160px, 1fr));
+            gap: 12px;
+        }
+
+        .metric {
+            padding: 14px;
+            border-radius: 18px;
+            background: rgba(2, 6, 23, .34);
+            border: 1px solid rgba(226, 232, 240, .10);
+        }
+
+        .metric small {
+            display: block;
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+
+        .metric strong {
+            display: block;
+            font-size: 17px;
+            color: #f8fafc;
+        }
+
+        section.panel {
+            display: none;
+            border: 1px solid rgba(226, 232, 240, .12);
+            border-radius: 30px;
+            background: rgba(15, 23, 42, .78);
+            box-shadow: var(--shadow);
+            padding: 28px;
+            margin-bottom: 24px;
+        }
+
+        section.panel.active {
+            display: block;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            align-items: flex-start;
+            border-bottom: 1px solid rgba(226, 232, 240, .12);
+            padding-bottom: 18px;
+            margin-bottom: 22px;
+        }
+
+        .panel-header h2 {
+            margin: 0;
+            font-size: 30px;
+            letter-spacing: -.035em;
+        }
+
+        .panel-header p {
+            margin: 8px 0 0;
+            color: #cbd5e1;
+            line-height: 1.6;
+            max-width: 920px;
+        }
+
+        .section-tag {
+            flex: 0 0 auto;
+            border-radius: 999px;
+            padding: 8px 12px;
+            background: rgba(56, 189, 248, .11);
+            border: 1px solid rgba(56, 189, 248, .28);
+            color: #bae6fd;
+            font-size: 12px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr);
+            gap: 18px;
+        }
+
+        .card {
+            border: 1px solid rgba(226, 232, 240, .12);
+            background: rgba(2, 6, 23, .34);
+            border-radius: 22px;
+            padding: 18px;
+            margin-bottom: 16px;
+        }
+
+        .card h3 {
+            margin: 0 0 10px;
+            color: #f8fafc;
+            font-size: 20px;
+            letter-spacing: -.02em;
+        }
+
+        .card p,
+        .card li {
+            color: #cbd5e1;
+            line-height: 1.65;
+            font-size: 14px;
+        }
+
+        .card ul,
+        .card ol {
+            margin: 10px 0 0;
+            padding-left: 20px;
+        }
+
+        code.inline,
+        .card code:not(pre code) {
+            color: #bae6fd;
+            background: rgba(2, 132, 199, .16);
+            border: 1px solid rgba(125, 211, 252, .16);
+            border-radius: 7px;
+            padding: 1px 6px;
+            font-family: var(--mono);
+            font-size: .92em;
+        }
+
+        .code-card {
+            overflow: hidden;
+            border-radius: 22px;
+            border: 1px solid rgba(226, 232, 240, .14);
+            background: #020617;
+            margin: 16px 0;
+        }
+
+        .code-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: center;
+            padding: 12px 14px;
+            background: rgba(30, 41, 59, .85);
+            border-bottom: 1px solid rgba(226, 232, 240, .10);
+        }
+
+        .code-head strong {
+            font-size: 13px;
+            color: #e2e8f0;
+        }
+
+        .code-head button {
+            border: 0;
+            border-radius: 10px;
+            padding: 7px 10px;
+            cursor: pointer;
+            color: #0f172a;
+            background: #e0f2fe;
+            font-weight: 900;
+            font-size: 12px;
+        }
+
+        pre {
+            margin: 0;
+            padding: 16px;
+            overflow: auto;
+            font-family: var(--mono);
+            font-size: 13px;
+            line-height: 1.55;
+            color: #dbeafe;
+            max-height: 520px;
+        }
+
+        .explain-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: 14px;
+        }
+
+        .explain {
+            border-radius: 18px;
+            padding: 14px;
+            background: rgba(15, 23, 42, .72);
+            border: 1px solid rgba(226, 232, 240, .10);
+        }
+
+        .explain strong {
+            display: block;
+            color: #f8fafc;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .explain span {
+            color: #cbd5e1;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .diagram-shell {
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+
+        .diagram {
+            position: relative;
+            width: 1220px;
+            height: 760px;
+            margin: 0 auto;
+            border-radius: 28px;
+            border: 1px solid rgba(226, 232, 240, .10);
+            background:
+                linear-gradient(90deg, rgba(56, 189, 248, .05), transparent 30%, rgba(167, 139, 250, .04)),
+                rgba(2, 6, 23, .30);
+            overflow: hidden;
+        }
+
+        .zone {
+            position: absolute;
+            border-radius: 26px;
+            border: 1px dashed rgba(226, 232, 240, .22);
+            background: rgba(15, 23, 42, .20);
+            color: #cbd5e1;
+            padding: 12px 16px;
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: .02em;
+        }
+
+        .zone.docker {
+            left: 38px;
+            top: 48px;
+            width: 1144px;
+            height: 575px;
+        }
+
+        .zone.host {
+            left: 38px;
+            top: 648px;
+            width: 1144px;
+            height: 78px;
+        }
+
+        .node {
+            position: absolute;
+            z-index: 5;
+            width: 245px;
+            min-height: 128px;
+            border-radius: 24px;
+            padding: 18px;
+            background: rgba(248, 250, 252, .95);
+            color: #0f172a;
+            box-shadow: 0 16px 34px rgba(0, 0, 0, .24);
+            border: 1px solid rgba(255, 255, 255, .75);
+            cursor: pointer;
+            transition: transform .18s ease, outline .18s ease, box-shadow .18s ease;
+        }
+
+        .node:hover,
+        .node.focused {
+            transform: translateY(-6px);
+            outline: 4px solid rgba(56, 189, 248, .28);
+            box-shadow: 0 24px 46px rgba(0, 0, 0, .34);
+        }
+
+        .node h3 {
+            margin: 0 0 10px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-size: 19px;
+            letter-spacing: -.02em;
+        }
+
+        .node p {
+            margin: 0;
+            color: #334155;
+            line-height: 1.45;
+            font-size: 13px;
+        }
+
+        .mini-badge {
+            width: 34px;
+            height: 34px;
+            display: inline-grid;
+            place-items: center;
+            border-radius: 12px;
+            color: white;
+            font-weight: 900;
+            font-size: 15px;
+        }
+
+        .node .tag {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, .08);
+            font-weight: 900;
+            font-size: 12px;
+        }
+
+        .n-genie {
+            left: 80px;
+            top: 110px;
+        }
+
+        .n-tr069 {
+            left: 488px;
+            top: 110px;
+        }
+
+        .n-adapter {
+            left: 895px;
+            top: 110px;
+        }
+
+        .n-mongo {
+            left: 80px;
+            top: 365px;
+        }
+
+        .n-redis {
+            left: 488px;
+            top: 365px;
+        }
+
+        .n-prpl {
+            left: 895px;
+            top: 365px;
+        }
+
+        .n-tcpdump {
+            left: 488px;
+            top: 648px;
+            min-height: 58px;
+        }
+
+        .n-web {
+            left: 80px;
+            top: 648px;
+            min-height: 58px;
+        }
+
+        .n-evid {
+            left: 895px;
+            top: 648px;
+            min-height: 58px;
+        }
+
+        .port {
+            position: absolute;
+            z-index: 7;
+            padding: 7px 11px;
+            border-radius: 999px;
+            background: rgba(14, 116, 144, .82);
+            color: #e0f2fe;
+            border: 1px solid rgba(125, 211, 252, .32);
+            font-weight: 900;
+            font-size: 12px;
+            pointer-events: none;
+        }
+
+        .port.ui {
+            left: 100px;
+            top: 78px;
+        }
+
+        .port.nbi {
+            left: 100px;
+            top: 245px;
+        }
+
+        .port.cwmp {
+            left: 405px;
+            top: 128px;
+        }
+
+        .port.bml {
+            left: 930px;
+            top: 325px;
+        }
+
+        .port.web {
+            left: 100px;
+            top: 623px;
+        }
+
+        svg.lines {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .flow {
+            fill: none;
+            stroke: var(--line);
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-dasharray: 12 10;
+            opacity: .82;
+            marker-end: url(#arrow);
+        }
+
+        .flow.orange {
+            stroke: rgba(251, 146, 60, .85);
+        }
+
+        .flow.blue {
+            stroke: rgba(56, 189, 248, .78);
+        }
+
+        .flow.purple {
+            stroke: rgba(167, 139, 250, .85);
+        }
+
+        .flow.green {
+            stroke: rgba(34, 197, 94, .85);
+        }
+
+        .flow.yellow {
+            stroke: rgba(250, 204, 21, .78);
+        }
+
+        .flow.hot {
+            stroke: var(--green) !important;
+            opacity: 1;
+            stroke-width: 5;
+            animation: dash 1s linear infinite;
+            filter: drop-shadow(0 0 8px rgba(34, 197, 94, .46));
+        }
+
+        @keyframes dash {
+            to {
+                stroke-dashoffset: -22;
+            }
+        }
+
+        .tooltip {
+            position: fixed;
+            z-index: 1000;
+            max-width: 340px;
+            background: rgba(2, 6, 23, .96);
+            border: 1px solid rgba(226, 232, 240, .18);
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, .40);
+            padding: 13px 14px;
+            color: #e5e7eb;
+            font-size: 13px;
+            line-height: 1.45;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity .12s ease, transform .12s ease;
+        }
+
+        .tooltip.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .tooltip strong {
+            display: block;
+            color: #f8fafc;
+            margin-bottom: 5px;
+        }
+
+        .table-wrap {
+            overflow: auto;
+            border: 1px solid rgba(226, 232, 240, .12);
+            border-radius: 18px;
+            margin: 16px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 720px;
+            background: rgba(2, 6, 23, .24);
+        }
+
+        th,
+        td {
+            padding: 12px 14px;
+            border-bottom: 1px solid rgba(226, 232, 240, .10);
+            text-align: left;
+            vertical-align: top;
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.45;
+        }
+
+        th {
+            color: #f8fafc;
+            background: rgba(30, 41, 59, .70);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .callout {
+            border-left: 5px solid var(--blue);
+            background: rgba(56, 189, 248, .08);
+            border-radius: 16px;
+            padding: 14px 16px;
+            color: #dbeafe;
+            line-height: 1.6;
+            margin: 16px 0;
+        }
+
+        .warning {
+            border-left-color: var(--yellow);
+            background: rgba(250, 204, 21, .08);
+            color: #fef3c7;
+        }
+
+        .ok {
+            border-left-color: var(--green);
+            background: rgba(34, 197, 94, .08);
+            color: #dcfce7;
+        }
+
+        .small-note {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.55;
+        }
+
+        @media (max-width: 1120px) {
+            .app {
+                grid-template-columns: 1fr;
+            }
+
+            aside {
+                position: relative;
+                height: auto;
+            }
+
+            .folder-list {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 700px) {
+            main {
+                padding: 14px;
+            }
+
+            .hero,
+            section.panel {
+                padding: 20px;
+                border-radius: 22px;
+            }
+
+            .folder-list {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-grid,
+            .explain-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .panel-header {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <aside>
+            <div class="brand">
+                <div class="brand-icon">📁</div>
+                <div>
+                    <h1>EasyMesh Lab Docs</h1>
+                    <small>Documentación interactiva del entorno Docker</small>
+                </div>
+            </div>
+
+            <div class="folder-title">Carpetas del proyecto</div>
+            <nav class="folder-list" aria-label="Navegación de apartados">
+                <button class="folder active" data-target="arquitectura"><span
+                        class="emoji">🧭</span><span><strong>01_arquitectura</strong><span>Mapa general y flujo
+                            completo</span></span></button>
+                <button class="folder" data-target="compose"><span
+                        class="emoji">🐳</span><span><strong>02_docker_compose</strong><span>Servicios, puertos y
+                            volúmenes</span></span></button>
+                <button class="folder" data-target="genieacs"><span
+                        class="emoji">🟦</span><span><strong>03_genieacs_acs</strong><span>ACS, UI, NBI y
+                            CWMP</span></span></button>
+                <button class="folder" data-target="prplmesh"><span
+                        class="emoji">🟩</span><span><strong>04_prplmesh</strong><span>Simulador EasyMesh y
+                            BML</span></span></button>
+                <button class="folder" data-target="adapter"><span
+                        class="emoji">🟪</span><span><strong>05_adaptador</strong><span>Transforma EasyMesh a
+                            TR-069</span></span></button>
+                <button class="folder" data-target="tr069"><span
+                        class="emoji">🟧</span><span><strong>06_tr069_sim</strong><span>CPE virtual y modelo
+                            CSV</span></span></button>
+                <button class="folder" data-target="datamodel"><span
+                        class="emoji">📄</span><span><strong>07_modelo_datos</strong><span>Parámetros
+                            X_SARA_EasyMesh</span></span></button>
+                <button class="folder" data-target="evidencias"><span
+                        class="emoji">✅</span><span><strong>08_evidencias</strong><span>Pruebas, logs y JSON
+                            final</span></span></button>
+                <button class="folder" data-target="comandos"><span
+                        class="emoji">⌨️</span><span><strong>09_comandos</strong><span>Arranque, validación y
+                            debug</span></span></button>
+                <button class="folder" data-target="pagina"><span
+                        class="emoji">🌐</span><span><strong>10_pag_web</strong><span>Esta web dentro de
+                            Docker</span></span></button>
+            </nav>
+
+            <div class="quick-status">
+                <strong>Estado esperado:</strong><br />
+                GenieACS en <code class="inline">3000</code>, CWMP en <code class="inline">7547</code>, API en <code
+                    class="inline">7557</code>, web en <code class="inline">8181</code> y CPE virtual <code
+                    class="inline">EasyMeshVirtualCPE</code> registrado.
+            </div>
+        </aside>
+
+        <main>
+            <div class="hero">
+                <div class="hero-top">
+                    <div>
+                        <h2>Laboratorio Docker GenieACS + prplMesh + TR-069</h2>
+                        <p>
+                            Esta página explica el proyecto como si la persona que lo abre no conociera nada del
+                            laboratorio. Cada carpeta representa una parte del entorno. Al hacer clic se muestra su
+                            función, el código implicado, qué valores genera y cómo se comprueba que funciona.
+                        </p>
+                    </div>
+                    <div class="pill"><span class="dot"></span> prplMesh → Adaptador → CPE virtual → GenieACS</div>
+                </div>
+
+                <div class="hero-grid">
+                    <div class="metric"><small>ACS</small><strong>GenieACS</strong></div>
+                    <div class="metric"><small>CPE virtual</small><strong>tr069-sim</strong></div>
+                    <div class="metric"><small>Fuente EasyMesh</small><strong>prplMesh / BML</strong></div>
+                    <div class="metric"><small>Web explicativa</small><strong>http://localhost:8181</strong></div>
+                </div>
+            </div>
+
+            <section id="arquitectura" class="panel active">
+                <div class="panel-header">
+                    <div>
+                        <h2>01_arquitectura</h2>
+                        <p>Visión general del montaje. Aquí se entiende quién habla con quién, por qué existe cada
+                            contenedor y qué camino siguen los datos hasta aparecer en GenieACS.</p>
+                    </div>
+                    <span class="section-tag">Mapa general</span>
+                </div>
+
+                <div class="diagram-shell">
+                    <div class="diagram" id="diagram">
+                        <div class="zone docker">🐳 Docker Compose: contenedores del laboratorio</div>
+                        <div class="zone host">💻 PC Windows / C:\EasyMesh-Lab</div>
+
+                        <svg class="lines" viewBox="0 0 1220 760" preserveAspectRatio="none" aria-hidden="true">
+                            <defs>
+                                <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7"
+                                    markerHeight="7" orient="auto-start-reverse">
+                                    <path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(226,232,240,.86)"></path>
+                                </marker>
+                            </defs>
+                            <path id="f-cpe-acs" class="flow orange" d="M 488 175 C 400 175, 350 175, 325 175"></path>
+                            <path id="f-acs-mongo" class="flow blue" d="M 200 238 C 200 285, 200 330, 200 365"></path>
+                            <path id="f-acs-redis" class="flow blue" d="M 310 225 C 420 280, 520 315, 570 365"></path>
+                            <path id="f-adapter-cpe" class="flow purple" d="M 895 175 C 820 175, 770 175, 733 175">
+                            </path>
+                            <path id="f-prpl-adapter" class="flow green" d="M 1018 365 C 1018 315, 1018 275, 1018 238">
+                            </path>
+                            <path id="f-adapter-data" class="flow yellow" d="M 1018 238 C 1080 380, 1100 520, 1018 648">
+                            </path>
+                            <path id="f-cpe-sniffer" class="flow" d="M 610 238 C 610 380, 610 520, 610 648"></path>
+                            <path id="f-prpl-sniffer" class="flow green" d="M 895 445 C 790 520, 705 590, 650 648">
+                            </path>
+                        </svg>
+
+                        <div class="port ui">UI 3000</div>
+                        <div class="port nbi">NBI 7557</div>
+                        <div class="port cwmp">CWMP 7547</div>
+                        <div class="port bml">BML / beerocks_cli</div>
+                        <div class="port web">WEB 8181</div>
+
+                        <article class="node n-genie" data-lines="f-cpe-acs,f-acs-mongo,f-acs-redis"
+                            data-title="GenieACS"
+                            data-tip="Servidor ACS. Gestiona el CPE virtual mediante TR-069/CWMP y guarda los parámetros recibidos.">
+                            <h3><span class="mini-badge" style="background:#2563eb">A</span>GenieACS</h3>
+                            <p>ACS central del laboratorio. Recibe sesiones CWMP y permite ver el CPE EasyMesh.</p>
+                            <span class="tag">3000 · 7547 · 7557</span>
+                        </article>
+
+                        <article class="node n-tr069" data-lines="f-cpe-acs,f-adapter-cpe,f-cpe-sniffer"
+                            data-title="tr069-sim"
+                            data-tip="CPE virtual. Carga el CSV generado por el adaptador y responde a GenieACS con parámetros X_SARA_EasyMesh.">
+                            <h3><span class="mini-badge" style="background:#ea580c">C</span>tr069-sim</h3>
+                            <p>CPE virtual EasyMesh. Expone el modelo TR-069 generado desde prplMesh.</p>
+                            <span class="tag">Serial 200001</span>
+                        </article>
+
+                        <article class="node n-adapter" data-lines="f-prpl-adapter,f-adapter-cpe,f-adapter-data"
+                            data-title="Adaptador"
+                            data-tip="Pieza clave: lee la topología EasyMesh con beerocks_cli y crea data_model_easymesh.csv.">
+                            <h3><span class="mini-badge" style="background:#7c3aed">↔</span>Adaptador</h3>
+                            <p>Convierte información EasyMesh en parámetros TR-069 entendibles por el CPE virtual.</p>
+                            <span class="tag">easymesh-tr069-adapter</span>
+                        </article>
+
+                        <article class="node n-mongo" data-lines="f-acs-mongo" data-title="MongoDB"
+                            data-tip="Base de datos donde GenieACS guarda dispositivos, parámetros y tareas.">
+                            <h3><span class="mini-badge" style="background:#16a34a">M</span>MongoDB</h3>
+                            <p>Persistencia de GenieACS: dispositivos, parámetros, tareas y timestamps.</p>
+                        </article>
+
+                        <article class="node n-redis" data-lines="f-acs-redis" data-title="Redis"
+                            data-tip="Servicio auxiliar de GenieACS para estado interno, colas o caché.">
+                            <h3><span class="mini-badge" style="background:#dc2626">R</span>Redis</h3>
+                            <p>Servicio auxiliar usado por GenieACS para funcionamiento interno.</p>
+                        </article>
+
+                        <article class="node n-prpl" data-lines="f-prpl-adapter,f-prpl-sniffer" data-title="prplMesh"
+                            data-tip="Simulador EasyMesh. Genera el mapa BML con GW_MASTER, wlan0 y wlan2.">
+                            <h3><span class="mini-badge" style="background:#16a34a">Wi</span>prplMesh</h3>
+                            <p>Fuente de datos EasyMesh: gateway, radios, canales y frecuencias.</p>
+                            <span class="tag">GW_MASTER · 2 radios</span>
+                        </article>
+
+                        <article class="node n-web" data-title="pag-web"
+                            data-tip="Contenedor Nginx que sirve esta documentación en http://localhost:8181.">
+                            <h3><span class="mini-badge" style="background:#0891b2">🌐</span>pag-web</h3>
+                            <p>Web explicativa del laboratorio, servida por Nginx.</p>
+                        </article>
+
+                        <article class="node n-tcpdump" data-lines="f-cpe-sniffer,f-prpl-sniffer" data-title="tcpdump"
+                            data-tip="Captura tráfico para analizar CWMP/TR-069 o generar pruebas .pcap.">
+                            <h3><span class="mini-badge" style="background:#64748b">◉</span>tcpdump</h3>
+                            <p>Captura tráfico del laboratorio.</p>
+                        </article>
+
+                        <article class="node n-evid" data-lines="f-adapter-data" data-title="Evidencias"
+                            data-tip="Carpeta donde se guardan CSV, JSON, logs y pruebas finales del laboratorio.">
+                            <h3><span class="mini-badge" style="background:#ca8a04">✓</span>Evidencias</h3>
+                            <p>Pruebas finales para memoria y validación.</p>
+                        </article>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Resumen del flujo</h3>
+                    <ol>
+                        <li><strong>prplMesh</strong> simula una red EasyMesh y genera una topología: gateway
+                            <code>GW_MASTER</code>, radio <code>wlan0</code> y radio <code>wlan2</code>.</li>
+                        <li><strong>El adaptador</strong> entra en el contenedor de prplMesh y ejecuta
+                            <code>beerocks_cli -c bml_conn_map</code>.</li>
+                        <li><strong>El adaptador</strong> transforma esa salida en un fichero
+                            <code>data_model_easymesh.csv</code>.</li>
+                        <li><strong>tr069-sim</strong> arranca como CPE virtual y carga ese CSV como modelo de datos
+                            TR-069.</li>
+                        <li><strong>GenieACS</strong> recibe el CPE, consulta parámetros y acaba mostrando valores
+                            EasyMesh dentro de <code>X_SARA_EasyMesh</code>.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section id="compose" class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>02_docker_compose</h2>
+                        <p>Define qué contenedores existen, cómo se llaman, qué puertos exponen y qué carpetas
+                            comparten. Es el punto de arranque del laboratorio.</p>
+                    </div>
+                    <span class="section-tag">docker-compose.override.yml</span>
+                </div>
+
+                <div class="two-col">
+                    <div>
+                        <div class="code-card">
+                            <div class="code-head"><strong>docker-compose.override.yml</strong><button
+                                    class="copy">Copiar</button></div>
+                            <pre><code>services:
+  easymesh-tr069-adapter:
+    build:
+      context: ./adapter
+      dockerfile: Dockerfile
+    container_name: easymesh-tr069-adapter
+    depends_on:
+      - easymesh-simulator
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./tr069-data:/data
+    restart: "no"
+
+  tr069-sim:
+    build:
+      context: ./tr069-sim
+      dockerfile: Dockerfile
+    container_name: tr069-sim
+    depends_on:
+      - genieacs
+      - easymesh-tr069-adapter
+    volumes:
+      - ./tr069-data:/data:ro
+    restart: unless-stopped
+
+  pag-web:
+    image: nginx:alpine
+    container_name: pag-web
+    ports:
+      - "8181:80"
+    volumes:
+      - ./pag-web/index.html:/usr/share/nginx/html/index.html:ro
+    restart: unless-stopped</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Qué hace cada bloque</h3>
+                        <ul>
+                            <li><code>easymesh-tr069-adapter</code>: genera el modelo TR-069 a partir de prplMesh.</li>
+                            <li><code>/var/run/docker.sock</code>: permite que el adaptador ejecute comandos contra
+                                otros contenedores Docker.</li>
+                            <li><code>./tr069-data:/data</code>: carpeta compartida donde se escriben los ficheros
+                                generados.</li>
+                            <li><code>restart: "no"</code>: el adaptador termina después de generar los archivos; no
+                                tiene que quedarse vivo.</li>
+                            <li><code>tr069-sim</code>: CPE virtual que lee <code>/data/data_model_easymesh.csv</code>.
+                            </li>
+                            <li><code>pag-web</code>: contenedor Nginx que sirve esta página en
+                                <code>http://localhost:8181</code>.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Servicio</th>
+                                <th>Función</th>
+                                <th>Puertos / volúmenes</th>
+                                <th>Resultado esperado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>genieacs</td>
+                                <td>ACS TR-069</td>
+                                <td>3000, 7547, 7557</td>
+                                <td>Interfaz web y API funcionando</td>
+                            </tr>
+                            <tr>
+                                <td>mongo</td>
+                                <td>Base de datos</td>
+                                <td>Interno</td>
+                                <td>Guarda dispositivos y parámetros</td>
+                            </tr>
+                            <tr>
+                                <td>redis</td>
+                                <td>Servicio auxiliar</td>
+                                <td>Interno</td>
+                                <td>Apoya el funcionamiento de GenieACS</td>
+                            </tr>
+                            <tr>
+                                <td>easymesh-simulator</td>
+                                <td>prplMesh</td>
+                                <td>Interno</td>
+                                <td>Genera topología EasyMesh</td>
+                            </tr>
+                            <tr>
+                                <td>easymesh-tr069-adapter</td>
+                                <td>Adaptador</td>
+                                <td>./tr069-data:/data</td>
+                                <td>Crea CSV y salida BML</td>
+                            </tr>
+                            <tr>
+                                <td>tr069-sim</td>
+                                <td>CPE virtual</td>
+                                <td>Lee ./tr069-data</td>
+                                <td>Se registra en GenieACS</td>
+                            </tr>
+                            <tr>
+                                <td>pag-web</td>
+                                <td>Documentación</td>
+                                <td>8181:80</td>
+                                <td>Muestra esta web</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="genieacs" class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>03_genieacs_acs</h2>
+                        <p>GenieACS es el servidor ACS. En este laboratorio es quien recibe al CPE virtual y guarda los
+                            parámetros EasyMesh.</p>
+                    </div>
+                    <span class="section-tag">ACS / CWMP / NBI</span>
+                </div>
+
+                <div class="explain-grid">
+                    <div class="explain"><strong>Puerto 3000</strong><span>Interfaz web de GenieACS. Aquí se ve el
+                            dispositivo registrado.</span></div>
+                    <div class="explain"><strong>Puerto 7547</strong><span>Endpoint CWMP/TR-069. El CPE virtual se
+                            conecta aquí.</span></div>
+                    <div class="explain"><strong>Puerto 7557</strong><span>API NBI. Se usa para consultar dispositivos y
+                            crear tareas.</span></div>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-head"><strong>Comprobación de GenieACS</strong><button class="copy">Copiar</button>
+                    </div>
+                    <pre><code>curl.exe -i http://localhost:3000
+curl.exe -i http://localhost:7547/
+curl.exe -i http://localhost:7557/devices</code></pre>
+                </div>
+
+                <div class="card">
+                    <h3>Qué respuesta es normal</h3>
+                    <ul>
+                        <li><code>http://localhost:3000</code>: debe abrir la interfaz web.</li>
+                        <li><code>http://localhost:7547/</code>: puede devolver <code>405 Method Not Allowed</code>. Eso
+                            no es un fallo; significa que el endpoint CWMP existe, pero espera peticiones
+                            <code>POST</code> TR-069.</li>
+                        <li><code>http://localhost:7557/devices</code>: devuelve un JSON con los dispositivos
+                            registrados.</li>
+                    </ul>
+                </div>
+
+                <div class="callout ok">
+                    El dispositivo final esperado en GenieACS es <code>535241-EasyMeshVirtualCPE-200001</code>. Ese
+                    identificador sale de Manufacturer OUI <code>535241</code>, ProductClass
+                    <code>EasyMeshVirtualCPE</code> y SerialNumber <code>200001</code>.
+                </div>
+            </section>
+
+            <section id="prplmesh" class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>04_prplmesh</h2>
+                        <p>prplMesh/EasyMesh es la fuente de datos. En vez de inventar los valores del CPE, el
+                            laboratorio los lee desde la topología simulada.</p>
+                    </div>
+                    <span class="section-tag">EasyMesh / BML</span>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-head"><strong>Comando para consultar la topología BML</strong><button
+                            class="copy">Copiar</button></div>
+                    <pre><code>docker exec -it easymesh-simulator bash -lc "export LD_LIBRARY_PATH=/opt/prplmesh/build/install/lib:/opt/prplmesh/build/out/lib:/usr/local/lib:/usr/lib; cd /opt/prplmesh/build/install/bin; ./beerocks_cli -c bml_conn_map"</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-head"><strong>Salida BML esperada</strong><button class="copy">Copiar</button>
+                    </div>
+                    <pre><code>bml_connect: return value is: BML_RET_OK, Success status
+bml_nw_map_query: return value is: BML_RET_OK, Success status
+
+GW_BRIDGE: name: GW_MASTER, mac: 06:8e:01:be:ef:29, ipv4: 0.0.0.0
+    ETHERNET: mac: 06:8e:01:be:ef:2a
+    RADIO: wlan0 mac: 2e:ac:27:ab:5d:92, ch: 1, bw: 40L, freq: 2412MHz
+    RADIO: wlan2 mac: 0e:92:da:b8:03:bf, ch: 149, bw: 80H, freq: 5745MHz
+bml_disconnect: return value is: BML_RET_OK, Success status</code></pre>
+                </div>
+
+                <div class="card">
+                    <h3>Qué significan esos valores</h3>
+                    <ul>
+                        <li><code>GW_MASTER</code>: nombre del gateway EasyMesh detectado.</li>
+                        <li><code>06:8e:01:be:ef:29</code>: MAC del gateway.</li>
+                        <li><code>wlan0</code>: primera radio, canal <code>1</code>, frecuencia <code>2412 MHz</code>,
+                            banda <code>2.4 GHz</code>.</li>
+                        <li><code>wlan2</code>: segunda radio, canal <code>149</code>, frecuencia <code>5745 MHz</code>,
+                            banda <code>5 GHz</code>.</li>
+                        <li><code>BML_RET_OK</code>: confirma que la consulta a prplMesh funciona.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="adapter" class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>05_adaptador</h2>
+                        <p>El adaptador es la pieza más importante del proyecto: une el mundo EasyMesh con el mundo
+                            TR-069. Sin él, GenieACS no vería datos reales de prplMesh.</p>
+                    </div>
+                    <span class="section-tag">EasyMesh → TR-069</span>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-head"><strong>adapter/Dockerfile</strong><button class="copy">Copiar</button></div>
+                    <pre><code>FROM docker:27-cli
+
+RUN apk add --no-cache bash grep sed coreutils
+
+COPY generate-easymesh-datamodel.sh /usr/local/bin/generate-easymesh-datamodel.sh
+
+RUN sed -i 's/\r$//' /usr/local/bin/generate-easymesh-datamodel.sh && \
+    chmod +x /usr/local/bin/generate-easymesh-datamodel.sh
+
+CMD ["/usr/local/bin/generate-easymesh-datamodel.sh"]</code></pre>
+                </div>
+
+                <div class="card">
+                    <h3>Explicación línea a línea del Dockerfile</h3>
+                    <ul>
+                        <li><code>FROM docker:27-cli</code>: usa una imagen que ya trae el cliente Docker. Esto permite
+                            ejecutar <code>docker exec</code> desde dentro del contenedor.</li>
+                        <li><code>apk add</code>: instala herramientas de shell necesarias para parsear texto.</li>
+                        <li><code>COPY</code>: mete dentro de la imagen el script que genera el modelo.</li>
+                        <li><code>sed -i 's/\r$//'</code>: elimina saltos de línea de Windows, evitando errores como
+                            <code>/dev/null$'\r'</code>.</li>
+                        <li><code>chmod +x</code>: hace ejecutable el script.</li>
+                        <li><code>CMD</code>: al arrancar el contenedor se ejecuta directamente el generador.</li>
+                    </ul>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-head"><strong>generate-easymesh-datamodel.sh - lógica simplificada</strong><button
+                            class="copy">Copiar</button></div>
+                    <pre><code>#!/usr/bin/env bash
+set -e
+
+OUT_DIR="/data"
+BML_OUT="$OUT_DIR/bml_conn_map_para_tr069.txt"
+CSV_OUT="$OUT_DIR/data_model_easymesh.csv"
+
+# 1. Leer datos reales desde prplMesh
+docker exec easymesh-simulator bash -lc "export LD_LIBRARY_PATH=/opt/prplmesh/build/install/lib:/opt/prplmesh/build/out/lib:/usr/local/lib:/usr/lib; cd /opt/prplmesh/build/install/bin; ./beerocks_cli -c bml_conn_map" > "$BML_OUT"
+
+# 2. Crear cabecera del modelo TR-069
+cat > "$CSV_OUT" <<EOF
+Parameter,Object,Writable,Value,Value type
+InternetGatewayDevice,true,false,,
+InternetGatewayDevice.DeviceInfo,true,false,,
+InternetGatewayDevice.DeviceInfo.Manufacturer,false,false,Sara-Lab,xsd:string
+InternetGatewayDevice.DeviceInfo.ManufacturerOUI,false,false,535241,xsd:string
+InternetGatewayDevice.DeviceInfo.ProductClass,false,false,EasyMeshVirtualCPE,xsd:string
+InternetGatewayDevice.DeviceInfo.SerialNumber,false,false,200001,xsd:string
+InternetGatewayDevice.X_SARA_EasyMesh,true,false,,
+EOF
+
+# 3. Añadir parámetros EasyMesh extraídos del BML
+# GatewayName, GatewayMac, RadioNumber, Radio.1, Radio.2, canales y frecuencias
+
+echo "Adaptador EasyMesh -> TR-069 finalizado correctamente."
+exit 0</code></pre>
+                </div>
+
+                <div class="card">
+                    <h3>Qué hace el script realmente</h3>
+                    <ol>
+                        <li>Ejecuta <code>beerocks_cli -c bml_conn_map</code> dentro de <code>easymesh-simulator</code>.
+                        </li>
+                        <li>Guarda la salida exacta en <code>/data/bml_conn_map_para_tr069.txt</code>.</li>
+                        <li>Extrae el nombre del gateway, MAC, radios, canales, anchos de banda y frecuencias.</li>
+                        <li>Crea <code>/data/data_model_easymesh.csv</code> con formato compatible con
+                            <code>genieacs-sim</code>.</li>
+                        <li>Ese CSV será leído por <code>tr069-sim</code> para que GenieACS vea los valores EasyMesh.
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            <section id="tr069" class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>06_tr069_sim</h2>
+                        <p>El CPE virtual es el dispositivo que GenieACS gestiona. No es un router físico, pero se
+                            comporta como un CPE TR-069 para el ACS.</p>
+                    </div>
+                    <span class="section-tag">CPE virtual</span>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-head"><strong>tr069-sim/Dockerfile</strong><button class="copy">Copiar</button>
+                    </div>
+                    <pre><code>FROM node:14-bullseye
+
+RUN apt-get update && apt-get install -y \
+    git \
+    ca-certificates \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN git clone https://github.com/genieacs/genieacs-sim.git /opt/genieacs-sim
+
+WORKDIR /opt/genieacs-sim
+
+RUN npm install
+
+RUN chmod +x ./genieacs-sim
+
+CMD ["bash", "-lc", "until test -f /data/data_model_easymesh.csv; do echo 'Esperando modelo EasyMesh generado por el adaptador...'; sleep 5; done; until curl -s -o /dev/null -w '%{http_code}' http://genieacs:7547/ | grep -q '405'; do echo 'Esperando a GenieACS CWMP en genieacs:7547...'; sleep 5; done; echo 'GenieACS CWMP disponible. Arrancando CPE virtual EasyMesh...'; ./genieacs-sim --acs-url http://genieacs:7547/ --data-model /data/data_model_easymesh.csv --processes 1 --serial 200001"]</code></pre>
+                </div>
+
+                <div class="card">
+                    <h3>Qué hace este contenedor</h3>
+                    <ul>
+                        <li>Instala Node.js y clona <code>genieacs-sim</code>.</li>
+                        <li>Espera a que exista <code>/data/data_model_easymesh.csv</code>. Así no arranca antes que el
+                            adaptador.</li>
+                        <li>Espera a que GenieACS responda en <code>http://genieacs:7547/</code>.</li>
+                        <li>Arranca el simulador con <code>--serial 200001</code>.</li>
+                        <li>Usa <code>--data-model</code> para exponer los parámetros generados.</li>
+                    </ul>
+                </div>
+
+                <div class="callout ok">
+                    Cuando funciona, en los logs debe aparecer algo como: <code>Simulator 200001 started</code> y
+                    <code>GenieACS CWMP disponible. Arrancando CPE virtual EasyMesh...</code>.
+                </div>
+            </section>
+
+            <section id="datamodel" class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>07_modelo_datos</h2>
+                        <p>El modelo de datos es el fichero CSV que traduce la información EasyMesh a parámetros TR-069.
+                        </p>
+                    </div>
+                    <span class="section-tag">X_SARA_EasyMesh</span>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-head"><strong>tr069-data/data_model_easymesh.csv</strong><button
+                            class="copy">Copiar</button></div>
+                    <pre><code>Parameter,Object,Writable,Value,Value type
+InternetGatewayDevice.DeviceInfo.Manufacturer,false,false,Sara-Lab,xsd:string
+InternetGatewayDevice.DeviceInfo.ManufacturerOUI,false,false,535241,xsd:string
+InternetGatewayDevice.DeviceInfo.ProductClass,false,false,EasyMeshVirtualCPE,xsd:string
+InternetGatewayDevice.DeviceInfo.SerialNumber,false,false,200001,xsd:string
+InternetGatewayDevice.DeviceInfo.SoftwareVersion,false,false,prplMesh-Docker,xsd:string
+InternetGatewayDevice.X_SARA_EasyMesh.ControllerStatus,false,false,Running,xsd:string
+InternetGatewayDevice.X_SARA_EasyMesh.GatewayName,false,false,GW_MASTER,xsd:string
+InternetGatewayDevice.X_SARA_EasyMesh.GatewayMac,false,false,06:8e:01:be:ef:29,xsd:string
+InternetGatewayDevice.X_SARA_EasyMesh.RadioNumber,false,false,2,xsd:unsignedInt
+InternetGatewayDevice.X_SARA_EasyMesh.Source,false,false,beerocks_cli_bml_conn_map,xsd:string
+InternetGatewayDevice.X_SARA_EasyMesh.Radio.1.Interface,false,false,wlan0,xsd:string
+InternetGatewayDevice.X_SARA_EasyMesh.Radio.1.MACAddress,false,false,2e:ac:27:ab:5d:92,xsd:string
+InternetGatewayDevice.X_SARA_EasyMesh.Radio.1.Channel,false,false,1,xsd:unsignedInt
+InternetGatewayDevice.X_SARA_EasyMesh.Radio.1.Bandwidth,false,false,40L,xsd:string
+InternetGatewayDevice.X_SARA_EasyMesh.Radio.1.FrequencyMHz,false,false,2412,xsd:unsignedInt
+InternetGatewayDevice.X_SARA_EasyMesh.Radio.1.Band,false,false,2.4GHz,xsd:string
+InternetGatewayDevice.X_SARA_EasyMesh.Radio.2.Interface,false,false,wlan2,xsd:string
+InternetGatewayDevice.X_SARA_EasyMesh.Radio.2.MACAddress,false,false,0e:92:da:b8:03:bf,xsd:string
+InternetGatewayDevice.X_SARA_EasyMesh.Radio.2.Channel,false,false,149,xsd:unsignedInt
+InternetGatewayDevice.X_SARA_EasyMesh.Radio.2.Bandwidth,false,false,80H,xsd:string
+InternetGatewayDevice.X_SARA_EasyMesh.Radio.2.FrequencyMHz,false,false,5745,xsd:unsignedInt
+InternetGatewayDevice.X_SARA_EasyMesh.Radio.2.Band,false,false,5GHz,xsd:string</code></pre>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Parámetro</th>
+                                <th>Valor</th>
+                                <th>Qué significa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Manufacturer</td>
+                                <td>Sara-Lab</td>
+                                <td>Fabricante ficticio usado para identificar el CPE virtual del laboratorio.</td>
+                            </tr>
+                            <tr>
+                                <td>ManufacturerOUI</td>
+                                <td>535241</td>
+                                <td>Identificador OUI usado por GenieACS para construir el ID del dispositivo.</td>
+                            </tr>
+                            <tr>
+                                <td>ProductClass</td>
+                                <td>EasyMeshVirtualCPE</td>
+                                <td>Clase de producto del CPE simulado.</td>
+                            </tr>
+                            <tr>
+                                <td>SerialNumber</td>
+                                <td>200001</td>
+                                <td>Número de serie del CPE virtual.</td>
+                            </tr>
+                            <tr>
+                                <td>GatewayName</td>
+                                <td>GW_MASTER</td>
+                                <td>Nombre del gateway leído desde prplMesh.</td>
+                            </tr>
+                            <tr>
+                                <td>RadioNumber</td>
+                                <td>2</td>
+                                <td>Número de radios detectadas en la topología EasyMesh.</td>
+                            </tr>
+                            <tr>
+                                <td>Radio.1</td>
+                                <td>wlan0 / 2412 MHz</td>
+                                <td>Radio de 2.4 GHz.</td>
+                            </tr>
+                            <tr>
+                                <td>Radio.2</td>
+                                <td>wlan2 / 5745 MHz</td>
+                                <td>Radio de 5 GHz.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="evidencias" class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>08_evidencias</h2>
+                        <p>Las evidencias son los archivos que demuestran que la integración funciona. Sirven para
+                            memoria, defensa, reunión o entrega.</p>
+                    </div>
+                    <span class="section-tag">Validación final</span>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-head"><strong>Guardar evidencias</strong><button class="copy">Copiar</button></div>
+                    <pre><code>cd C:\EasyMesh-Lab
+
+$fecha = Get-Date -Format "yyyyMMdd_HHmmss"
+$destino = "C:\EasyMesh-Lab\evidencias\integracion_easymesh_tr069_$fecha"
+
+New-Item -ItemType Directory -Force -Path $destino | Out-Null
+
+Copy-Item "C:\EasyMesh-Lab\tr069-data\bml_conn_map_para_tr069.txt" "$destino\bml_conn_map_para_tr069.txt"
+Copy-Item "C:\EasyMesh-Lab\tr069-data\data_model_easymesh.csv" "$destino\data_model_easymesh.csv"
+Copy-Item "C:\EasyMesh-Lab\evidencias\devices_easymesh_getvalues.json" "$destino\devices_easymesh_getvalues.json"
+
+docker compose ps > "$destino\docker_compose_ps.txt"
+docker compose logs --tail=200 easymesh-tr069-adapter > "$destino\logs_easymesh_tr069_adapter.txt"
+docker compose logs --tail=200 tr069-sim > "$destino\logs_tr069_sim.txt"
+docker compose logs --tail=200 genieacs > "$destino\logs_genieacs.txt"
+docker compose logs --tail=200 easymesh-simulator > "$destino\logs_easymesh_simulator.txt"
+
+Compress-Archive -Path "$destino\*" -DestinationPath "$destino.zip" -Force</code></pre>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Archivo</th>
+                                <th>Qué demuestra</th>
+                                <th>Por qué es importante</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>bml_conn_map_para_tr069.txt</td>
+                                <td>Salida real de prplMesh</td>
+                                <td>Demuestra que los datos no se han inventado manualmente.</td>
+                            </tr>
+                            <tr>
+                                <td>data_model_easymesh.csv</td>
+                                <td>Modelo TR-069 generado</td>
+                                <td>Demuestra la transformación EasyMesh → TR-069.</td>
+                            </tr>
+                            <tr>
+                                <td>devices_easymesh_getvalues.json</td>
+                                <td>Valores vistos por GenieACS</td>
+                                <td>Demuestra que el ACS recibe los parámetros.</td>
+                            </tr>
+                            <tr>
+                                <td>logs_tr069_sim.txt</td>
+                                <td>Arranque del CPE virtual</td>
+                                <td>Demuestra que el CPE se conecta a GenieACS.</td>
+                            </tr>
+                            <tr>
+                                <td>logs_genieacs.txt</td>
+                                <td>Actividad del ACS</td>
+                                <td>Demuestra sesiones CWMP y tareas.</td>
+                            </tr>
+                            <tr>
+                                <td>docker_compose_ps.txt</td>
+                                <td>Estado de contenedores</td>
+                                <td>Demuestra que el entorno estaba levantado.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="comandos" class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>09_comandos</h2>
+                        <p>Comandos de operación diaria: levantar, parar, validar, consultar logs y comprobar parámetros
+                            finales.</p>
+                    </div>
+                    <span class="section-tag">PowerShell</span>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-head"><strong>Levantar todo el entorno</strong><button class="copy">Copiar</button>
+                    </div>
+                    <pre><code>cd C:\EasyMesh-Lab
+docker compose up -d</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-head"><strong>Levantar reconstruyendo imágenes</strong><button
+                            class="copy">Copiar</button></div>
+                    <pre><code>cd C:\EasyMesh-Lab
+docker compose up -d --build</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-head"><strong>Comprobar contenedores y puertos</strong><button
+                            class="copy">Copiar</button></div>
+                    <pre><code>docker compose ps
+docker ps --format "table {{.Names}}\t{{.Ports}}"</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-head"><strong>Validar parámetros EasyMesh en GenieACS</strong><button
+                            class="copy">Copiar</button></div>
+                    <pre><code>curl.exe http://localhost:7557/devices > C:\EasyMesh-Lab\evidencias\devices_check_final.json
+
+Select-String -Path C:\EasyMesh-Lab\evidencias\devices_check_final.json -Pattern "EasyMeshVirtualCPE|GW_MASTER|wlan0|wlan2|FrequencyMHz|2412|5745"</code></pre>
+                </div>
+
+                <div class="callout warning">
+                    Si aparece un error de puerto ocupado, revisa que <code>pag-web</code> esté usando
+                    <code>8181:80</code> y no <code>8080:80</code>. El conflicto de puertos impide arrancar otros
+                    servicios.
+                </div>
+            </section>
+
+            <section id="pagina" class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>10_pag_web</h2>
+                        <p>Esta carpeta contiene la web de documentación interactiva. No es necesaria para que TR-069
+                            funcione, pero ayuda a explicar el laboratorio de forma visual.</p>
+                    </div>
+                    <span class="section-tag">Nginx / HTML</span>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-head"><strong>Estructura de carpeta</strong><button class="copy">Copiar</button>
+                    </div>
+                    <pre><code>C:\EasyMesh-Lab\pag-web\index.html</code></pre>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-head"><strong>Servicio Docker para la web</strong><button
+                            class="copy">Copiar</button></div>
+                    <pre><code>pag-web:
+  image: nginx:alpine
+  container_name: pag-web
+  ports:
+    - "8181:80"
+  volumes:
+    - ./pag-web/index.html:/usr/share/nginx/html/index.html:ro
+  restart: unless-stopped</code></pre>
+                </div>
+
+                <div class="card">
+                    <h3>Qué hace este servicio</h3>
+                    <ul>
+                        <li>Usa <code>nginx:alpine</code>, una imagen ligera para servir páginas estáticas.</li>
+                        <li>Publica el puerto <code>8181</code> del PC hacia el puerto <code>80</code> del contenedor.
+                        </li>
+                        <li>Monta tu HTML local como <code>/usr/share/nginx/html/index.html</code>.</li>
+                        <li>Al abrir <code>http://localhost:8181</code>, Nginx muestra esta documentación.</li>
+                    </ul>
+                </div>
+
+                <div class="callout ok">
+                    Esta web convierte el proyecto en algo enseñable: una persona externa puede ver la arquitectura,
+                    abrir cada apartado y entender qué función cumple cada archivo.
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        const folders = document.querySelectorAll('.folder');
+        const panels = document.querySelectorAll('section.panel');
+
+        function openPanel(id) {
+            panels.forEach(panel => panel.classList.toggle('active', panel.id === id));
+            folders.forEach(folder => folder.classList.toggle('active', folder.dataset.target === id));
+            const active = document.getElementById(id);
+            if (active) active.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        folders.forEach(folder => {
+            folder.addEventListener('click', () => openPanel(folder.dataset.target));
+        });
+
+        const tooltip = document.getElementById('tooltip');
+        const nodes = document.querySelectorAll('.node');
+        const flows = document.querySelectorAll('.flow');
+
+        function clearFlows() {
+            flows.forEach(f => f.classList.remove('hot'));
+            nodes.forEach(n => n.classList.remove('focused'));
+        }
+
+        nodes.forEach(node => {
+            node.addEventListener('mouseenter', e => {
+                clearFlows();
+                node.classList.add('focused');
+                const lineIds = (node.dataset.lines || '').split(',').filter(Boolean);
+                lineIds.forEach(id => {
+                    const line = document.getElementById(id);
+                    if (line) line.classList.add('hot');
+                });
+                tooltip.innerHTML = `<strong>${node.dataset.title || 'Elemento'}</strong>${node.dataset.tip || ''}`;
+                tooltip.classList.add('visible');
+            });
+
+            node.addEventListener('mousemove', e => {
+                tooltip.style.left = `${e.clientX + 16}px`;
+                tooltip.style.top = `${e.clientY + 16}px`;
+            });
+
+            node.addEventListener('mouseleave', () => {
+                clearFlows();
+                tooltip.classList.remove('visible');
+            });
+        });
+
+        document.querySelectorAll('.copy').forEach(button => {
+            button.addEventListener('click', async () => {
+                const code = button.closest('.code-card').querySelector('code').innerText;
+                try {
+                    await navigator.clipboard.writeText(code);
+                    const old = button.innerText;
+                    button.innerText = 'Copiado';
+                    setTimeout(() => button.innerText = old, 1000);
+                } catch {
+                    button.innerText = 'Selecciona el código';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
