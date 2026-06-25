@@ -1,0 +1,1 @@
+{"status":"success","data":{"resultType":"vector","result":[{"metric":{"__name__":"easymesh_sim_event_info","from_device":"AP_SALON","instance":"easymesh-network-simulator:9200","job":"easymesh-network-simulator","reason":"target RSSI -54.5 dBm vs current -68.9 dBm","result":"Success","to_device":"AP_DORMITORIO","type":"ClientSteering"},"value":[1782323628.812,"1"]}]}}

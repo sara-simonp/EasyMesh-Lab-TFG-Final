@@ -1,0 +1,2 @@
+﻿"timestamp_export","query_name","promql","labels","value_timestamp","value"
+"2026-06-24 19:48:11","01_simulator_up","easymesh_simulator_up","__name__=easymesh_simulator_up;instance=easymesh-network-simulator:9200;job=easymesh-network-simulator","1782323291,462","1"

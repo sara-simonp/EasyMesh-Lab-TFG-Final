@@ -1,5 +1,5 @@
 Scenario: roaming - Movimiento de MOVIL_SARA y steering hacia el satelite.
-Timestamp: 2026-06-22T09:31:22Z
-Mobile: {'client': 'MOVIL_SARA', 'ap': 'AP_SALON', 'signal_strength_dbm': -53.1, 'snr_db': 42.0, 'latency_ms': 11.0, 'jitter_ms': 2.1, 'packet_loss_percent': 0, 'throughput_downlink_mbps': 85.5, 'throughput_uplink_mbps': 29.4, 'qoe_score': 100, 'qoe_state': 'Buena', 'qoe_numeric': 4, 'qoe_reason': 'sin degradacion relevante'}
-Event: {'type': 'ClientSteering', 'from_device': 'AP_DORMITORIO', 'to_device': 'AP_SALON', 'result': 'Success', 'reason': 'target RSSI -52.5 dBm vs current -69.3 dBm', 'client': 'MOVIL_SARA', 'client_mac': 'DE:AD:BE:EF:00:02', 'timestamp_utc': '2026-06-22T09:31:22Z', 'steering_count': 10}
+Timestamp: 2026-06-24T20:48:21Z
+Mobile: {'client': 'MOVIL_SARA', 'ap': 'AP_DORMITORIO', 'signal_strength_dbm': -45.5, 'snr_db': 49.7, 'latency_ms': 9.9, 'jitter_ms': 4.2, 'packet_loss_percent': 0, 'throughput_downlink_mbps': 85.5, 'throughput_uplink_mbps': 29.4, 'qoe_score': 100, 'qoe_state': 'Buena', 'qoe_numeric': 4, 'qoe_reason': 'sin degradacion relevante'}
+Event: {'type': 'ClientSteering', 'from_device': 'AP_SALON', 'to_device': 'AP_DORMITORIO', 'result': 'Success', 'reason': 'target RSSI -52.3 dBm vs current -70.0 dBm', 'client': 'MOVIL_SARA', 'client_mac': 'DE:AD:BE:EF:00:02', 'timestamp_utc': '2026-06-24T20:48:21Z', 'steering_count': 120}
 CSV: /data/data_model_easymesh.csv

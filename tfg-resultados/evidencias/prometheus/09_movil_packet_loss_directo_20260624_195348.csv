@@ -1,0 +1,2 @@
+﻿"timestamp_export","query_name","promql","labels","value_timestamp","value"
+"2026-06-24 19:53:48","09_movil_packet_loss_directo","easymesh_sim_client_packet_loss_percent{client=""MOVIL_SARA""}","__name__=easymesh_sim_client_packet_loss_percent;ap=AP_DORMITORIO;band=5GHz;client=MOVIL_SARA;instance=easymesh-network-simulator:9200;job=easymesh-network-simulator;service=mixed","1782323628,936","0"

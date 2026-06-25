@@ -1,0 +1,2 @@
+﻿"timestamp_export","query_name","promql","labels","value_timestamp","value"
+"2026-06-24 19:53:49","21_csv_latest_snapshot","easymesh_csv_latest_snapshot_timestamp_seconds{kind=""tr181""}","__name__=easymesh_csv_latest_snapshot_timestamp_seconds;file=data_model_easymesh_roaming_20260624_195011.csv;instance=csv-prometheus-exporter:9210;job=csv-prometheus-exporter;kind=tr181;scenario=roaming","1782323629,179","1782323500"

@@ -1,0 +1,1 @@
+{"status":"success","data":{"resultType":"vector","result":[{"metric":{"__name__":"easymesh_client_signal_strength_dbm","ap":"AP_SALON","client":"MOVIL_SARA","device_index":"1","instance":"genieacs-qoe-exporter:9108","job":"genieacs-qoe-exporter","sta_index":"2"},"value":[1782323629.376,"-48"]}]}}

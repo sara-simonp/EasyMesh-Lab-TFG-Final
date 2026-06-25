@@ -1,0 +1,1 @@
+{"status":"success","data":{"resultType":"vector","result":[{"metric":{"__name__":"easymesh_sim_event_info","from_device":"AP_SALON","instance":"easymesh-network-simulator:9200","job":"easymesh-network-simulator","reason":"noise floor increased","result":"RadioQualityDegraded","type":"HighInterference"},"value":[1782323291.554,"1"]}]}}

@@ -1,0 +1,2 @@
+﻿"timestamp_export","query_name","promql","labels","value_timestamp","value"
+"2026-06-24 19:48:11","02_scenario_info","easymesh_sim_scenario_info","__name__=easymesh_sim_scenario_info;description=Interferencia elevada en AP_SALON por canal solapado.;instance=easymesh-network-simulator:9200;job=easymesh-network-simulator;scenario=interference","1782323291,533","1"

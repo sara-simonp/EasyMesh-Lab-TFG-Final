@@ -1,0 +1,2 @@
+﻿"timestamp_export","query_name","promql","labels","value_timestamp","value"
+"2026-06-24 19:53:49","25_csv_tr181_packet_loss","easymesh_csv_tr181_numeric_value{parameter=""Device.X_SARA_QoE.PacketLossPercent""}","__name__=easymesh_csv_tr181_numeric_value;file=data_model_easymesh_roaming_20260624_195011.csv;instance=csv-prometheus-exporter:9210;job=csv-prometheus-exporter;parameter=Device.X_SARA_QoE.PacketLossPercent;scenario=roaming;value_type=xsd:decimal","1782323629,258","0"

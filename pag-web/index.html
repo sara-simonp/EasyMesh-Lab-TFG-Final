@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Laboratorio Docker EasyMesh TR-069 GenieACS</title>
+  <title>Laboratorio EasyMesh QoE · GenieACS · Prometheus · Grafana</title>
 
   <style>
     :root {
@@ -1147,7 +1147,7 @@
 
 
     /* =====================================================================
-       NUEVA SECCIÓN 14_TR069-DATA — carpeta compartida adapter/CPE
+       NUEVA SECCIÃ“N 14_TR069-DATA — carpeta compartida adapter/CPE
        ===================================================================== */
     .dataflow-lab{position:relative;border:1px solid #dbeafe;background:linear-gradient(135deg,#eff6ff,#ffffff 45%,#f5f3ff);border-radius:28px;padding:26px;margin:22px 0;overflow:hidden;box-shadow:0 18px 40px rgba(37,99,235,.10)}
     .dataflow-lab:before{content:"";position:absolute;inset:auto -80px -120px auto;width:260px;height:260px;border-radius:999px;background:radial-gradient(circle,rgba(124,58,237,.18),transparent 68%);animation:dataGlow 4s ease-in-out infinite}
@@ -1160,43 +1160,454 @@
     .data-step:last-child:after{display:none}.data-step .num{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:12px;background:#2563eb;color:#fff;font-weight:900;margin-bottom:10px}.data-step strong{display:block;color:#0f172a;margin-bottom:7px}.data-step p{margin:0;color:#475569;line-height:1.45;font-size:14px}.data-step code{font-size:12px}.data-step.hot{border-color:#c4b5fd;background:#fbfaff}.data-step.hot .num{background:#7c3aed}.data-step.write .num{background:#16a34a}.data-step.read .num{background:#f97316}
     .csv-line-demo{border:1px solid #e2e8f0;background:#f8fafc;border-radius:18px;padding:16px;margin:16px 0}.csv-line-demo .row{display:grid;grid-template-columns:1.6fr .65fr .75fr 1fr .8fr;gap:8px;align-items:stretch;margin-top:9px}.csv-line-demo .cell{border:1px solid #e2e8f0;background:#fff;border-radius:12px;padding:9px 10px;min-width:0;overflow:auto;font-family:var(--mono);font-size:12px}.csv-line-demo .head .cell{background:#0f172a;color:#e2e8f0;font-weight:900}.csv-line-demo .object .cell{background:#f0fdf4}.csv-line-demo .param .cell{background:#eff6ff}.folder-path-dual{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}.folder-path-dual .path-card{border:1px solid #e2e8f0;border-radius:20px;background:#fff;padding:16px;box-shadow:0 10px 25px rgba(15,23,42,.06)}.folder-path-dual .path-card span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#64748b;font-weight:900;margin-bottom:8px}.folder-path-dual .path-card code{display:block;white-space:normal;word-break:break-word;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:10px}.tr069data-checks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.tr069data-checks .check-card{border:1px solid #e2e8f0;background:#fff;border-radius:18px;padding:15px}.tr069data-checks .check-card strong{display:block;color:#0f172a;margin-bottom:6px}.tr069data-checks .check-card p{margin:0;color:#475569;line-height:1.45;font-size:14px}@media(max-width:1100px){.dataflow-chain,.folder-path-dual,.tr069data-checks{grid-template-columns:1fr}.data-step:after{display:none}.csv-line-demo .row{grid-template-columns:1fr}.csv-line-demo .head{display:none}}
 
-  </style>
+  
+
+    /* =========================================================
+       BLOQUE GRAFICO DEL SIMULADOR FINAL EN 13_ESCENARIOS
+       ========================================================= */
+
+    .sfg-card {
+      margin: 24px 0;
+      border: 1px solid #dbeafe;
+      border-radius: 26px;
+      background: linear-gradient(135deg, #ffffff, #eff6ff 45%, #f5f3ff);
+      box-shadow: 0 18px 42px rgba(15,23,42,.14);
+      overflow: hidden;
+      color: #0f172a;
+    }
+
+    .sfg-head {
+      padding: 22px 24px;
+      border-bottom: 1px solid #dbeafe;
+      background: rgba(255,255,255,.88);
+    }
+
+    .sfg-head h3 {
+      margin: 0 0 8px;
+      color: #0f172a;
+      font-size: 26px;
+      letter-spacing: -.03em;
+    }
+
+    .sfg-head p {
+      margin: 0;
+      color: #475569;
+      line-height: 1.6;
+    }
+
+    .sfg-layout {
+      display: grid;
+      grid-template-columns: minmax(700px, 1.35fr) minmax(320px, .65fr);
+    }
+
+    .sfg-map {
+      position: relative;
+      min-height: 620px;
+      background:
+        radial-gradient(circle at 24% 38%, rgba(34,197,94,.15), transparent 24%),
+        radial-gradient(circle at 76% 38%, rgba(124,58,237,.14), transparent 24%),
+        linear-gradient(180deg, #f8fafc, #eef6ff);
+      border-right: 1px solid #dbeafe;
+      overflow: hidden;
+    }
+
+    .sfg-map::before {
+      content: "";
+      position: absolute;
+      inset: 20px;
+      border: 1px dashed rgba(100,116,139,.28);
+      border-radius: 26px;
+      pointer-events: none;
+    }
+
+    .sfg-lines {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .sfg-line {
+      fill: none;
+      stroke: rgba(100,116,139,.35);
+      stroke-width: 6;
+      stroke-linecap: round;
+      transition: .25s ease;
+    }
+
+    .sfg-line.good {
+      stroke: #16a34a;
+    }
+
+    .sfg-line.warn {
+      stroke: #f97316;
+      stroke-dasharray: 12 9;
+      animation: sfgLineFlow 1.2s linear infinite;
+    }
+
+    .sfg-line.bad {
+      stroke: #ef4444;
+      stroke-dasharray: 8 8;
+      animation: sfgLineFlow .9s linear infinite;
+    }
+
+    .sfg-line.roam {
+      stroke: #7c3aed;
+      stroke-width: 7;
+      stroke-dasharray: 14 10;
+      animation: sfgLineFlow 1s linear infinite;
+    }
+
+    .sfg-line.off {
+      opacity: .14;
+    }
+
+    @keyframes sfgLineFlow {
+      to { stroke-dashoffset: -44; }
+    }
+
+    .sfg-node {
+      position: absolute;
+      z-index: 3;
+      transform: translate(-50%, -50%);
+      min-width: 160px;
+      border-radius: 20px;
+      padding: 13px 15px;
+      background: rgba(255,255,255,.96);
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 16px 30px rgba(15,23,42,.13);
+      transition: .25s ease;
+    }
+
+    .sfg-node .kind {
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-weight: 900;
+      color: #64748b;
+      margin-bottom: 5px;
+    }
+
+    .sfg-node .name {
+      font-size: 17px;
+      font-weight: 900;
+      color: #0f172a;
+      margin-bottom: 5px;
+    }
+
+    .sfg-node .desc {
+      font-size: 13px;
+      color: #475569;
+      line-height: 1.35;
+    }
+
+    .sfg-controller {
+      left: 50%;
+      top: 12%;
+      border-color: #60a5fa;
+    }
+
+    .sfg-ap1 {
+      left: 24%;
+      top: 37%;
+      border-color: #22c55e;
+    }
+
+    .sfg-ap2 {
+      left: 76%;
+      top: 37%;
+      border-color: #a78bfa;
+    }
+
+    .sfg-client1 {
+      left: 15%;
+      top: 72%;
+    }
+
+    .sfg-client2 {
+      left: 34%;
+      top: 82%;
+    }
+
+    .sfg-client3 {
+      left: 84%;
+      top: 72%;
+    }
+
+    .sfg-node.warn {
+      border-color: #f97316;
+      box-shadow: 0 0 0 6px rgba(249,115,22,.13), 0 18px 34px rgba(249,115,22,.20);
+    }
+
+    .sfg-node.bad {
+      border-color: #ef4444;
+      box-shadow: 0 0 0 6px rgba(239,68,68,.13), 0 18px 34px rgba(239,68,68,.22);
+    }
+
+    .sfg-node.roam {
+      border-color: #7c3aed;
+      box-shadow: 0 0 0 6px rgba(124,58,237,.13), 0 18px 34px rgba(124,58,237,.22);
+    }
+
+    .sfg-signal {
+      display: inline-flex;
+      margin-top: 8px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: #dcfce7;
+      color: #166534;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .sfg-signal.warn {
+      background: #ffedd5;
+      color: #9a3412;
+    }
+
+    .sfg-signal.bad {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .sfg-signal.roam {
+      background: #ede9fe;
+      color: #5b21b6;
+    }
+
+    .sfg-stage {
+      position: absolute;
+      left: 28px;
+      top: 28px;
+      z-index: 5;
+      border-radius: 18px;
+      padding: 12px 14px;
+      background: rgba(15,23,42,.92);
+      color: #ffffff;
+      box-shadow: 0 18px 36px rgba(15,23,42,.20);
+    }
+
+    .sfg-stage small {
+      display: block;
+      font-size: 11px;
+      color: #cbd5e1;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 4px;
+      font-weight: 800;
+    }
+
+    .sfg-event {
+      position: absolute;
+      right: 28px;
+      bottom: 26px;
+      z-index: 5;
+      min-width: 260px;
+      border-radius: 18px;
+      padding: 14px 16px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 18px 36px rgba(15,23,42,.16);
+    }
+
+    .sfg-event small {
+      display: block;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-size: 11px;
+      font-weight: 900;
+      margin-bottom: 5px;
+    }
+
+    .sfg-event strong {
+      color: #0f172a;
+      font-size: 18px;
+    }
+
+    .sfg-side {
+      padding: 22px;
+      background: #ffffff;
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .sfg-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .sfg-btn {
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: #0f172a;
+      padding: 9px 12px;
+      border-radius: 999px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: .16s ease;
+      font-size: 13px;
+    }
+
+    .sfg-btn:hover {
+      transform: translateY(-1px);
+      border-color: #60a5fa;
+    }
+
+    .sfg-btn.active {
+      background: #2563eb;
+      border-color: #2563eb;
+      color: white;
+      box-shadow: 0 12px 22px rgba(37,99,235,.22);
+    }
+
+    .sfg-info {
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      background: #f8fafc;
+      padding: 16px;
+    }
+
+    .sfg-info h4 {
+      margin: 0 0 8px;
+      font-size: 19px;
+      color: #0f172a;
+    }
+
+    .sfg-info p {
+      margin: 0;
+      color: #475569;
+      line-height: 1.55;
+    }
+
+    .sfg-kpis {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .sfg-kpi {
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      background: #f8fafc;
+      padding: 12px;
+    }
+
+    .sfg-kpi span {
+      display: block;
+      font-size: 11px;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      font-weight: 900;
+      margin-bottom: 5px;
+    }
+
+    .sfg-kpi strong {
+      color: #0f172a;
+      font-size: 16px;
+    }
+
+    .sfg-path {
+      border-radius: 18px;
+      border: 1px solid #172033;
+      background: #0b1220;
+      color: #dbeafe;
+      padding: 14px;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      overflow: auto;
+      max-height: 250px;
+    }
+
+    .sfg-table {
+      margin: 18px 0;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      overflow: auto;
+      background: #ffffff;
+    }
+
+    .sfg-table table {
+      min-width: 850px;
+      width: 100%;
+      border-collapse: collapse;
+      background: #ffffff;
+    }
+
+    .sfg-table th {
+      background: #0f172a;
+      color: #e2e8f0;
+    }
+
+    .sfg-table td {
+      color: #334155;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    @media (max-width: 1200px) {
+      .sfg-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sfg-map {
+        min-width: 850px;
+        border-right: none;
+        border-bottom: 1px solid #dbeafe;
+      }
+
+      .sfg-card {
+        overflow-x: auto;
+      }
+    }
+
+</style>
 </head>
 
 <body>
   <div class="app">
     <aside>
       <div class="brand">
-        <div class="brand-icon">📁</div>
+        <div class="brand-icon">&#128193;</div>
         <div>
-          <h1>EasyMesh Lab Docs</h1>
-          <small>Documentación interactiva del entorno Docker</small>
+          <h1>EasyMesh QoE Lab</h1>
+          <small>Simulador final · ACS · Prometheus · Grafana</small>
         </div>
       </div>
 
       <div class="folder-title">Carpetas del proyecto</div>
       <nav class="folder-list" aria-label="Navegación de apartados">
-        <button class="folder active" data-target="arquitectura"><span class="emoji">🧭</span><span><strong>01_arquitectura</strong><span>Mapa general y flujo completo</span></span></button>
-        <button class="folder" data-target="compose"><span class="emoji">🐳</span><span><strong>02_docker_compose</strong><span>Los dos Compose del proyecto</span></span></button>
-        <button class="folder" data-target="genieacs"><span class="emoji">🟦</span><span><strong>03_genieacs_acs</strong><span>ACS, UI, NBI y CWMP</span></span></button>
-        <button class="folder" data-target="prplmesh"><span class="emoji">🟩</span><span><strong>04_prplmesh</strong><span>Simulador EasyMesh y BML</span></span></button>
-        <button class="folder" data-target="adapter"><span class="emoji">🟪</span><span><strong>05_adaptador</strong><span>Transforma EasyMesh a TR-069</span></span></button>
-        <button class="folder" data-target="tr069"><span class="emoji">🟧</span><span><strong>06_tr069_sim</strong><span>CPE virtual y modelo CSV</span></span></button>
-        <button class="folder" data-target="datamodel"><span class="emoji">📄</span><span><strong>07_modelo_datos</strong><span>Parámetros X_SARA_EasyMesh</span></span></button>
-        <button class="folder" data-target="evidencias"><span class="emoji">✅</span><span><strong>08_evidencias</strong><span>Pruebas, logs y JSON final</span></span></button>
-        <button class="folder" data-target="comandos"><span class="emoji">⌨️</span><span><strong>09_comandos</strong><span>Arranque, validación y debug</span></span></button>
-        <button class="folder" data-target="pagina"><span class="emoji">🌐</span><span><strong>10_pag_web</strong><span>Esta web dentro de Docker</span></span></button>
-        <button class="folder" data-target="tiemporeal"><span class="emoji">🔴</span><span><strong>11_funcionamiento</strong><span>Vista animada tipo tiempo real</span></span></button>
-        <button class="folder" data-target="tr181"><span class="emoji">📡</span><span><strong>12_tr181_dataelements</strong><span>Rama Device.WiFi.DataElements</span></span></button>
-        <button class="folder" data-target="escenarios"><span class="emoji">🧪</span><span><strong>13_escenarios</strong><span>Normal, cliente lejos y steering</span></span></button>
-        <button class="folder" data-target="tr069data"><span class="emoji">🗂️</span><span><strong>14_tr069-data</strong><span>Carpeta compartida y CSV del CPE</span></span></button>
-        <button class="folder" data-target="recogida"><span class="emoji">💾</span><span><strong>15_recogida_datos</strong><span>Exportar JSON, CSV y logs</span></span></button>
-        <button class="folder" data-target="faults"><span class="emoji">⚠️</span><span><strong>16_faults</strong><span>Errores históricos y limpieza</span></span></button>
+        <button class="folder active" data-target="arquitectura"><span class="emoji">&#129517;</span><span><strong>01_arquitectura</strong><span>Mapa general y flujo completo</span></span></button>
+        <button class="folder" data-target="compose"><span class="emoji">&#128051;</span><span><strong>02_docker_compose</strong><span>Los dos Compose del proyecto</span></span></button>
+        <button class="folder" data-target="genieacs"><span class="emoji">&#128998;</span><span><strong>03_genieacs_acs</strong><span>ACS, UI, NBI y CWMP</span></span></button>
+        <button class="folder" data-target="prplmesh"><span class="emoji">&#129001;</span><span><strong>04_prplmesh</strong><span>Simulador EasyMesh y BML</span></span></button>
+        <button class="folder" data-target="adapter"><span class="emoji">&#129002;</span><span><strong>05_adaptador</strong><span>Transforma EasyMesh a TR-069</span></span></button>
+        <button class="folder" data-target="tr069"><span class="emoji">&#128999;</span><span><strong>06_tr069_sim</strong><span>CPE virtual y modelo CSV</span></span></button>
+        <button class="folder" data-target="datamodel"><span class="emoji">&#128196;</span><span><strong>07_modelo_datos</strong><span>Parámetros X_SARA_EasyMesh</span></span></button>
+        <button class="folder" data-target="evidencias"><span class="emoji">&#9989;</span><span><strong>08_evidencias</strong><span>Pruebas, logs y JSON final</span></span></button>
+        <button class="folder" data-target="comandos"><span class="emoji">&#9000;&#65039;</span><span><strong>09_comandos</strong><span>Arranque, validación y debug</span></span></button>
+        <button class="folder" data-target="pagina"><span class="emoji">&#127760;</span><span><strong>10_pag_web</strong><span>Esta web dentro de Docker</span></span></button>
+        <button class="folder" data-target="tiemporeal"><span class="emoji">&#128308;</span><span><strong>11_funcionamiento</strong><span>Vista animada tipo tiempo real</span></span></button>
+        <button class="folder" data-target="tr181"><span class="emoji">&#128225;</span><span><strong>12_tr181_dataelements</strong><span>Rama Device.WiFi.DataElements</span></span></button>
+        <button class="folder" data-target="escenarios"><span class="emoji">&#129514;</span><span><strong>13_escenarios</strong><span>Normal, cliente lejos y steering</span></span></button>
+        <button class="folder" data-target="tr069data"><span class="emoji">&#128450;&#65039;</span><span><strong>14_tr069-data</strong><span>Carpeta compartida y CSV del CPE</span></span></button>
+        <button class="folder" data-target="recogida"><span class="emoji">&#128190;</span><span><strong>15_recogida_datos</strong><span>Exportar JSON, CSV y logs</span></span></button>
+        <button class="folder" data-target="faults"><span class="emoji">&#9888;&#65039;</span><span><strong>16_faults</strong><span>Errores históricos y limpieza</span></span></button>
+        <button class="folder" data-target="migracion"><span class="emoji">&#128187;</span><span><strong>17_migracion_pc</strong><span>Recrear el laboratorio en otro PC</span></span></button>
+        <button class="folder" data-target="simuladorfinal"><span class="emoji">&#128202;</span><span><strong>18_simulador_final</strong><span>Prometheus, Grafana y métricas finales</span></span></button>
+        <button class="folder" data-target="resultadofinal"><span class="emoji">&#127942;</span><span><strong>19_resultado_final</strong><span>Estado final validado y conclusiones</span></span></button>
       </nav>
 
       <div class="quick-status">
         <strong>Estado esperado:</strong><br />
-        GenieACS en <code class="inline">3000</code>, CWMP en <code class="inline">7547</code>, API en <code class="inline">7557</code>, web en <code class="inline">8181</code>, CPE virtual <code class="inline">EasyMeshVirtualCPE</code> registrado y rama <code class="inline">Device.WiFi.DataElements</code> validada.
+        GenieACS en <code class="inline">3000</code>, CWMP en <code class="inline">7547</code>, API en <code class="inline">7557</code>, Prometheus en <code class="inline">9090</code>, Grafana en <code class="inline">3001</code>, simulador final en <code class="inline">9200</code>, web en <code class="inline">8181</code>, CPE virtual registrado y rama <code class="inline">Device.WiFi.DataElements.Network</code> validada.
       </div>
     </aside>
 
@@ -1204,20 +1615,20 @@
       <div class="hero">
         <div class="hero-top">
           <div>
-            <h2>Laboratorio Docker GenieACS + prplMesh + TR-069</h2>
+            <h2>Laboratorio Docker EasyMesh QoE + GenieACS + Prometheus + Grafana</h2>
             <p>
-              Esta página explica el proyecto completo de forma visual. Cada carpeta representa una parte del entorno. Al hacer clic se muestra su función, el código implicado, qué valores genera y cómo se comprueba que funciona. La versión actual incluye la validación nueva con TR-181/DataElements, escenarios EasyMesh, explicación de tr069-data y exportación de evidencias.
+              Esta página explica el proyecto completo de forma visual. La versión actual incorpora el simulador final <code class="inline">easymesh-network-simulator</code>, la integración TR-181/DataElements, el CPE virtual en GenieACS, el exporter QoE, Prometheus, Grafana, la migración a un segundo PC y el resultado final validado.
             </p>
           </div>
-          <div class="pill"><span class="dot"></span> prplMesh → Adaptador → CPE virtual → GenieACS</div>
+          <div class="pill"><span class="dot"></span> Simulador final → TR-181 CSV → GenieACS → Prometheus → Grafana</div>
         </div>
 
         <div class="hero-grid">
-          <div class="metric"><small>ACS</small><strong>GenieACS</strong></div>
-          <div class="metric"><small>CPE virtual</small><strong>tr069-sim</strong></div>
-          <div class="metric"><small>Fuente EasyMesh</small><strong>prplMesh / BML</strong></div>
-          <div class="metric"><small>Modelo TR-181</small><strong>Device.WiFi.DataElements</strong></div>
-          <div class="metric"><small>Escenarios</small><strong>normal · cliente_lejos · steering</strong></div>
+          <div class="metric"><small>Simulador final</small><strong>easymesh-network-simulator</strong></div>
+          <div class="metric"><small>ACS</small><strong>GenieACS + tr069-sim</strong></div>
+          <div class="metric"><small>Exporter</small><strong>genieacs-qoe-exporter</strong></div>
+          <div class="metric"><small>Monitorización</small><strong>Prometheus + Grafana</strong></div>
+          <div class="metric"><small>Escenarios</small><strong>8 escenarios QoE</strong></div>
           <div class="metric"><small>Web explicativa</small><strong>http://localhost:8181</strong></div>
         </div>
       </div>
@@ -1233,8 +1644,8 @@
 
         <div class="diagram-shell">
           <div class="diagram" id="diagram">
-            <div class="zone docker">🐳 Docker Compose: contenedores del laboratorio</div>
-            <div class="zone host">💻 PC Windows / C:\EasyMesh-Lab</div>
+            <div class="zone docker">&#128051; Docker Compose: contenedores del laboratorio</div>
+            <div class="zone host">&#128187; PC Windows / C:\EasyMesh-Lab</div>
 
             <svg class="lines" viewBox="0 0 1220 760" preserveAspectRatio="none" aria-hidden="true">
               <defs>
@@ -1271,7 +1682,7 @@
             </article>
 
             <article class="node n-adapter" data-lines="f-prpl-adapter,f-adapter-cpe,f-adapter-data" data-title="Adaptador" data-tip="Pieza clave: lee la topología EasyMesh con beerocks_cli y crea data_model_easymesh.csv.">
-              <h3><span class="mini-badge" style="background:#7c3aed">↔</span>Adaptador</h3>
+              <h3><span class="mini-badge" style="background:#7c3aed">&#8596;</span>Adaptador</h3>
               <p>Convierte información EasyMesh en parámetros TR-069 entendibles por el CPE virtual.</p>
               <span class="tag">easymesh-tr069-adapter</span>
             </article>
@@ -1293,17 +1704,17 @@
             </article>
 
             <article class="node n-web" data-title="pag-web" data-tip="Contenedor Nginx que sirve esta documentación en http://localhost:8181.">
-              <h3><span class="mini-badge" style="background:#0891b2">🌐</span>pag-web</h3>
+              <h3><span class="mini-badge" style="background:#0891b2">&#127760;</span>pag-web</h3>
               <p>Web explicativa del laboratorio, servida por Nginx.</p>
             </article>
 
             <article class="node n-tcpdump" data-lines="f-cpe-sniffer,f-prpl-sniffer" data-title="tcpdump" data-tip="Captura tráfico para analizar CWMP/TR-069 o generar pruebas .pcap.">
-              <h3><span class="mini-badge" style="background:#64748b">◉</span>tcpdump</h3>
+              <h3><span class="mini-badge" style="background:#64748b">&#9673;</span>tcpdump</h3>
               <p>Captura tráfico del laboratorio.</p>
             </article>
 
             <article class="node n-evid" data-lines="f-adapter-data" data-title="Evidencias" data-tip="Carpeta donde se guardan CSV, JSON, logs y pruebas finales del laboratorio.">
-              <h3><span class="mini-badge" style="background:#ca8a04">✓</span>Evidencias</h3>
+              <h3><span class="mini-badge" style="background:#ca8a04">&#10003;</span>Evidencias</h3>
               <p>Pruebas finales para memoria y validación.</p>
             </article>
           </div>
@@ -1959,7 +2370,7 @@ Select-String -Path C:\EasyMesh-Lab\evidencias\devices_check_final.json -Pattern
         <div class="panel-header">
           <div>
             <h2>11_funcionamiento</h2>
-            <p>Vista visual tipo “tiempo real” del laboratorio. Muestra, paso a paso, qué está haciendo cada contenedor y cómo circulan los datos desde prplMesh hasta GenieACS.</p>
+            <p>Vista visual tipo â€œtiempo realâ€ del laboratorio. Muestra, paso a paso, qué está haciendo cada contenedor y cómo circulan los datos desde prplMesh hasta GenieACS.</p>
           </div>
           <span class="section-tag">Vista dinámica</span>
         </div>
@@ -1970,8 +2381,8 @@ Select-String -Path C:\EasyMesh-Lab\evidencias\devices_check_final.json -Pattern
 
         <div class="live-controls">
           <button id="startLiveFlow" class="live-btn">▶ Iniciar simulación</button>
-          <button id="stopLiveFlow" class="live-btn secondary">■ Detener</button>
-          <button id="nextLiveStep" class="live-btn tertiary">➜ Paso siguiente</button>
+          <button id="stopLiveFlow" class="live-btn secondary">â–  Detener</button>
+          <button id="nextLiveStep" class="live-btn tertiary">âžœ Paso siguiente</button>
         </div>
 
         <div class="live-layout">
@@ -2087,7 +2498,7 @@ Select-String -Path C:\EasyMesh-Lab\evidencias\devices_check_final.json -Pattern
                   <span class="metric-value good" id="metric-acs">Operativo</span>
                 </div>
                 <div class="metric-item">
-                  <span class="metric-label">Última acción</span>
+                  <span class="metric-label">Ãšltima acción</span>
                   <span class="metric-value" id="metric-last-action">Esperando inicio</span>
                 </div>
                 <div class="metric-item">
@@ -2100,7 +2511,7 @@ Select-String -Path C:\EasyMesh-Lab\evidencias\devices_check_final.json -Pattern
             <div class="event-card">
               <h3>Eventos del laboratorio</h3>
               <div id="liveEventLog" class="event-log">
-                <div class="event-line">[espera] Pulsa “Iniciar simulación” para ver el flujo.</div>
+                <div class="event-line">[espera] Pulsa â€œIniciar simulaciónâ€ para ver el flujo.</div>
               </div>
             </div>
           </div>
@@ -2227,6 +2638,200 @@ Device.WiFi.DataElements.Network.Device.2.STA.1.SignalStrength = -59</code></pre
           <span class="section-tag">Validación EasyMesh interactiva</span>
         </div>
 
+        <div id="simulador-final-grafico" class="sfg-card">
+          <div class="sfg-head">
+            <h3>&#129514; Simulador final de escenarios EasyMesh</h3>
+            <p>
+              En la versión final del laboratorio, el contenedor <code>easymesh-network-simulator</code>
+              genera escenarios dinámicos de red WiFi EasyMesh. Cada escenario modifica la topología,
+              los clientes, el RSSI, la QoE, la utilización radio, el backhaul y los eventos que se ven
+              en Prometheus y Grafana.
+            </p>
+          </div>
+
+          <div class="sfg-layout">
+            <div class="sfg-map">
+              <svg class="sfg-lines" viewBox="0 0 1000 620" preserveAspectRatio="none" aria-hidden="true">
+                <path id="sfgLineControllerSalon" class="sfg-line good" d="M500 74 C430 130 330 165 240 230"></path>
+                <path id="sfgLineControllerDorm" class="sfg-line good" d="M500 74 C580 130 680 165 760 230"></path>
+                <path id="sfgLineSalonPortatil" class="sfg-line good" d="M240 230 C190 305 155 375 150 445"></path>
+                <path id="sfgLineSalonMovil" class="sfg-line good" d="M240 230 C285 320 320 405 340 508"></path>
+                <path id="sfgLineDormTablet" class="sfg-line good" d="M760 230 C810 305 840 375 840 445"></path>
+                <path id="sfgLineDormMovil" class="sfg-line off" d="M760 230 C770 325 765 415 760 508"></path>
+                <path id="sfgLineRoaming" class="sfg-line off" d="M340 508 C465 570 625 570 760 508"></path>
+              </svg>
+
+              <div class="sfg-stage">
+                <small>Escenario activo</small>
+                <strong id="sfgStageText">normal</strong>
+              </div>
+
+              <div class="sfg-node sfg-controller">
+                <span class="kind">Controller</span>
+                <div class="name">GW_MASTER</div>
+                <div class="desc">Controlador EasyMesh<br>2 agentes · 3 clientes</div>
+              </div>
+
+              <div class="sfg-node sfg-ap1" id="sfgApSalon">
+                <span class="kind">Agente EasyMesh</span>
+                <div class="name">AP_SALON</div>
+                <div class="desc" id="sfgSalonDesc">Backhaul Ethernet · estado correcto</div>
+              </div>
+
+              <div class="sfg-node sfg-ap2" id="sfgApDormitorio">
+                <span class="kind">Agente EasyMesh</span>
+                <div class="name">AP_DORMITORIO</div>
+                <div class="desc" id="sfgDormDesc">Backhaul WiFi-5GHz · estado correcto</div>
+              </div>
+
+              <div class="sfg-node sfg-client1">
+                <span class="kind">Cliente</span>
+                <div class="name">PORTATIL_SARA</div>
+                <div class="desc">Asociado a AP_SALON</div>
+                <span class="sfg-signal">RSSI -49 dBm</span>
+              </div>
+
+              <div class="sfg-node sfg-client2" id="sfgClientMovil">
+                <span class="kind">Cliente objetivo</span>
+                <div class="name">MOVIL_SARA</div>
+                <div class="desc" id="sfgMovilDesc">Asociado a AP_SALON</div>
+                <span class="sfg-signal" id="sfgMovilSignal">RSSI -48 dBm</span>
+              </div>
+
+              <div class="sfg-node sfg-client3">
+                <span class="kind">Cliente</span>
+                <div class="name">TABLET</div>
+                <div class="desc">Asociado a AP_DORMITORIO</div>
+                <span class="sfg-signal">RSSI -59 dBm</span>
+              </div>
+
+              <div class="sfg-event">
+                <small>Evento generado</small>
+                <strong id="sfgEventText">None / NoEvent</strong>
+              </div>
+            </div>
+
+            <div class="sfg-side">
+              <div class="sfg-buttons">
+                <button class="sfg-btn active" data-sfg-scenario="normal">Normal</button>
+                <button class="sfg-btn" data-sfg-scenario="coverage">Cobertura</button>
+                <button class="sfg-btn" data-sfg-scenario="interference">Interferencia</button>
+                <button class="sfg-btn" data-sfg-scenario="saturation">Saturación</button>
+                <button class="sfg-btn" data-sfg-scenario="roaming">Roaming</button>
+                <button class="sfg-btn" data-sfg-scenario="backhaul_degraded">Backhaul</button>
+                <button class="sfg-btn" data-sfg-scenario="ap_failure">Fallo AP</button>
+                <button class="sfg-btn" data-sfg-scenario="mixed">Mixto</button>
+              </div>
+
+              <div class="sfg-info">
+                <h4 id="sfgScenarioTitle">Escenario normal</h4>
+                <p id="sfgScenarioDesc">
+                  Estado estable de la red EasyMesh. Los clientes tienen buena señal, la QoE es alta y no hay eventos de degradación.
+                </p>
+              </div>
+
+              <div class="sfg-kpis">
+                <div class="sfg-kpi">
+                  <span>AP de MOVIL_SARA</span>
+                  <strong id="sfgKpiAp">AP_SALON</strong>
+                </div>
+                <div class="sfg-kpi">
+                  <span>RSSI MOVIL_SARA</span>
+                  <strong id="sfgKpiRssi">-48 dBm</strong>
+                </div>
+                <div class="sfg-kpi">
+                  <span>QoE Score</span>
+                  <strong id="sfgKpiQoe">100</strong>
+                </div>
+                <div class="sfg-kpi">
+                  <span>Evento</span>
+                  <strong id="sfgKpiEvent">None</strong>
+                </div>
+              </div>
+
+              <div class="sfg-path" id="sfgScenarioPath">Endpoint del simulador:
+http://localhost:9200/state
+
+Métricas:
+easymesh_sim_client_signal_dbm
+easymesh_sim_client_qoe_score
+easymesh_sim_radio_utilization_percent
+easymesh_sim_event_info</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sfg-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Escenario final</th>
+                <th>Qué representa</th>
+                <th>Resultado esperado en Grafana</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>normal</code></td>
+                <td>Red estable y sin eventos.</td>
+                <td>QoE alta, RSSI correcto y evento <code>None</code>.</td>
+              </tr>
+              <tr>
+                <td><code>coverage</code></td>
+                <td>Cliente con cobertura degradada.</td>
+                <td>Baja el RSSI y empeora la QoE.</td>
+              </tr>
+              <tr>
+                <td><code>interference</code></td>
+                <td>Ruido e interferencia radio.</td>
+                <td>Suben jitter, retry rate y pérdida de paquetes.</td>
+              </tr>
+              <tr>
+                <td><code>saturation</code></td>
+                <td>Canal WiFi saturado.</td>
+                <td>Sube la utilización radio y aumenta la latencia.</td>
+              </tr>
+              <tr>
+                <td><code>roaming</code></td>
+                <td>MOVIL_SARA cambia de AP.</td>
+                <td>Aparece <code>ClientSteering</code> y cambia el AP asociado.</td>
+              </tr>
+              <tr>
+                <td><code>backhaul_degraded</code></td>
+                <td>El enlace backhaul del AP satélite se degrada.</td>
+                <td>Empeora el RSSI, la latencia y la pérdida del backhaul.</td>
+              </tr>
+              <tr>
+                <td><code>ap_failure</code></td>
+                <td>Fallo de un punto de acceso.</td>
+                <td>Se degradan clientes y aparece evento de fallo.</td>
+              </tr>
+              <tr>
+                <td><code>mixed</code></td>
+                <td>Varias degradaciones al mismo tiempo.</td>
+                <td>Se afectan RSSI, QoE, radio, backhaul y eventos.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="code-card">
+          <div class="code-head"><strong>Comandos reales para mover el simulador final</strong><button class="copy">Copiar</button></div>
+          <pre><code>curl.exe http://localhost:9200/state
+curl.exe http://localhost:9200/metrics
+
+curl.exe "http://localhost:9200/set?scenario=normal"
+curl.exe "http://localhost:9200/set?scenario=coverage"
+curl.exe "http://localhost:9200/set?scenario=interference"
+curl.exe "http://localhost:9200/set?scenario=saturation"
+curl.exe "http://localhost:9200/set?scenario=roaming"
+curl.exe "http://localhost:9200/set?scenario=backhaul_degraded"
+curl.exe "http://localhost:9200/set?scenario=ap_failure"
+curl.exe "http://localhost:9200/set?scenario=mixed"</code></pre>
+        </div>
+
+
+
         <div class="callout ok">
           Idea clave: cada escenario es una fotografía distinta de la red. El adaptador convierte esa fotografía en <code>data_model_easymesh.csv</code>, <code>tr069-sim</code> la expone como CPE virtual y GenieACS la recoge mediante tareas <code>GetParameterValues</code>.
         </div>
@@ -2267,7 +2872,7 @@ Device.WiFi.DataElements.Network.Device.2.STA.1.SignalStrength = -59</code></pre
               <button class="scenario-btn" data-scenario="steering">Steering</button>
               <button class="scenario-play" id="scenarioPlay" type="button">▶ Reproducir validación</button>
               <div class="scenario-map-toolbar" aria-label="Controles de animación">
-                <button class="scenario-mini-btn" id="scenarioPrev" type="button">← Anterior</button>
+                <button class="scenario-mini-btn" id="scenarioPrev" type="button">â† Anterior</button>
                 <button class="scenario-mini-btn" id="scenarioNext" type="button">Siguiente →</button>
               </div>
             </div>
@@ -2340,6 +2945,162 @@ Device.WiFi.DataElements.Network.Event.1.Type = None</div>
             <div class="evidence-chip changed"><span>Valor que cambia</span><strong id="evidence-change">SignalStrength -52 dBm</strong></div>
             <div class="evidence-chip"><span>JSON evidencia</span><strong id="evidence-file">devices_tr181_normal.json</strong></div>
           </div>
+        </div>
+
+        
+        <div class="card">
+          <h3>Qué hace ahora el simulador final</h3>
+          <p>
+            En la versión final del laboratorio, la generación de escenarios no depende únicamente de una topología estática.
+            El contenedor <code>easymesh-network-simulator</code> actúa como simulador principal de comportamiento EasyMesh y
+            genera dinámicamente estados de red, métricas QoE, eventos de steering, condiciones radio y degradaciones de backhaul.
+          </p>
+
+          <p>
+            Este simulador expone dos salidas principales:
+          </p>
+
+          <ul>
+            <li>
+              <strong>Estado JSON de la red:</strong>
+              disponible en <code>http://localhost:9200/state</code>. Aquí se puede ver el escenario activo,
+              el controlador, los APs, los clientes, el estado de <code>MOVIL_SARA</code> y el evento actual.
+            </li>
+            <li>
+              <strong>Métricas Prometheus:</strong>
+              disponibles en <code>http://localhost:9200/metrics</code>. Estas métricas usan el prefijo
+              <code>easymesh_sim_*</code> y son recogidas directamente por Prometheus y Grafana.
+            </li>
+          </ul>
+
+          <div class="callout ok">
+            El simulador final permite demostrar que el laboratorio no solo muestra valores estáticos, sino que puede cambiar
+            de escenario y reflejar esos cambios en Prometheus y Grafana en tiempo real.
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Escenario del simulador final</th>
+                <th>Qué simula</th>
+                <th>Métricas afectadas</th>
+                <th>Uso en el TFG</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>normal</code></td>
+                <td>Estado estable de la red EasyMesh.</td>
+                <td><code>RSSI</code>, <code>QoE Score</code>, utilización radio y latencia en valores normales.</td>
+                <td>Sirve como línea base para comparar los demás escenarios.</td>
+              </tr>
+              <tr>
+                <td><code>coverage</code></td>
+                <td>Problema de cobertura WiFi en uno o varios clientes.</td>
+                <td>Baja <code>SignalStrength</code>, peor <code>QoE Score</code> y posible estado QoE degradado.</td>
+                <td>Permite estudiar cómo una mala señal afecta a la experiencia del cliente.</td>
+              </tr>
+              <tr>
+                <td><code>interference</code></td>
+                <td>Interferencia radio en el entorno WiFi.</td>
+                <td>Aumentan ruido, retry rate, jitter y pérdida de paquetes.</td>
+                <td>Permite representar degradación de calidad aunque el cliente siga conectado.</td>
+              </tr>
+              <tr>
+                <td><code>saturation</code></td>
+                <td>Saturación del canal o alta carga de red.</td>
+                <td>Sube la utilización radio, aumenta latencia y baja el throughput efectivo.</td>
+                <td>Permite analizar congestión y pérdida de QoE por carga elevada.</td>
+              </tr>
+              <tr>
+                <td><code>roaming</code></td>
+                <td>Movimiento de <code>MOVIL_SARA</code> entre APs.</td>
+                <td>Cambia el AP asociado, aparece evento <code>ClientSteering</code> y se actualiza el RSSI.</td>
+                <td>Demuestra el caso principal de steering EasyMesh.</td>
+              </tr>
+              <tr>
+                <td><code>backhaul_degraded</code></td>
+                <td>Degradación del enlace backhaul del AP satélite.</td>
+                <td>Empeora <code>BackhaulRSSI</code>, latencia de backhaul y pérdida de paquetes.</td>
+                <td>Permite separar problemas de acceso WiFi frente a problemas de transporte/backhaul.</td>
+              </tr>
+              <tr>
+                <td><code>ap_failure</code></td>
+                <td>Fallo de un punto de acceso.</td>
+                <td>Cambian asociaciones de clientes, eventos de fallo y estado de AP.</td>
+                <td>Sirve para validar detección de fallo y reacción de la topología.</td>
+              </tr>
+              <tr>
+                <td><code>mixed</code></td>
+                <td>Escenario combinado con varias degradaciones simultáneas.</td>
+                <td>Puede afectar a RSSI, QoE, radio, backhaul, eventos y clientes a la vez.</td>
+                <td>Representa una situación más realista y compleja para la validación final.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="code-card">
+          <div class="code-head"><strong>Comandos reales del simulador final</strong><button class="copy">Copiar</button></div>
+          <pre><code># Ver estado actual del simulador final
+curl.exe http://localhost:9200/state
+
+# Ver métricas Prometheus generadas directamente por el simulador
+curl.exe http://localhost:9200/metrics
+
+# Cambiar de escenario
+curl.exe "http://localhost:9200/set?scenario=normal"
+curl.exe "http://localhost:9200/set?scenario=coverage"
+curl.exe "http://localhost:9200/set?scenario=interference"
+curl.exe "http://localhost:9200/set?scenario=saturation"
+curl.exe "http://localhost:9200/set?scenario=roaming"
+curl.exe "http://localhost:9200/set?scenario=backhaul_degraded"
+curl.exe "http://localhost:9200/set?scenario=ap_failure"
+curl.exe "http://localhost:9200/set?scenario=mixed"</code></pre>
+        </div>
+
+        <div class="code-card">
+          <div class="code-head"><strong>Métricas Prometheus generadas por el simulador final</strong><button class="copy">Copiar</button></div>
+          <pre><code>easymesh_sim_mobile_qoe_state
+easymesh_sim_client_signal_dbm
+easymesh_sim_client_qoe_score
+easymesh_sim_radio_utilization_percent
+easymesh_sim_client_latency_ms
+easymesh_sim_client_jitter_ms
+easymesh_sim_client_packet_loss_percent
+easymesh_sim_client_retry_rate_percent
+easymesh_sim_client_throughput_down_mbps
+easymesh_sim_client_throughput_up_mbps
+easymesh_sim_backhaul_rssi_dbm
+easymesh_sim_backhaul_latency_ms
+easymesh_sim_backhaul_packet_loss_percent
+easymesh_sim_event_info
+easymesh_sim_scenario_info</code></pre>
+        </div>
+
+        <div class="card">
+          <h3>Relación entre el simulador final y GenieACS</h3>
+          <p>
+            El simulador final alimenta el laboratorio por dos caminos. El primero es directo:
+            <code>easymesh-network-simulator → Prometheus → Grafana</code>, usando métricas
+            <code>easymesh_sim_*</code>. El segundo camino pasa por el modelo de datos:
+            el estado EasyMesh se representa en <code>data_model_easymesh.csv</code>, el CPE virtual
+            <code>tr069-sim</code> lo expone por TR-069 y GenieACS lo recoge mediante tareas
+            <code>GetParameterValues</code>.
+          </p>
+
+          <pre><code>easymesh-network-simulator
+  ├── /state                  → Estado JSON del escenario activo
+  ├── /metrics                → Métricas Prometheus easymesh_sim_*
+  └── data_model_easymesh.csv → Modelo tipo TR-181/DataElements leído por tr069-sim</code></pre>
+        </div>
+
+        <div class="callout ok">
+          Resultado final validado: el dashboard de Grafana muestra simultáneamente métricas procedentes del simulador final
+          y métricas recogidas vía GenieACS/TR-069. Esto demuestra la integración completa entre simulación EasyMesh,
+          modelo de datos, ACS, Prometheus y Grafana.
         </div>
 
         <div class="scenario-timeline">
@@ -2712,6 +3473,309 @@ curl.exe "http://localhost:7557/faults" > C:\EasyMesh-Lab\evidencias\genieacs_fa
         </div>
       </section>
 
+
+      <section id="migracion" class="panel">
+        <div class="panel-header">
+          <div>
+            <h2>17_migracion_pc</h2>
+            <p>Esta sección documenta los cambios necesarios para recrear el laboratorio en un PC nuevo. Incluye la red Docker externa, el montaje de <code class="inline">tr069-data</code>, la carga de parámetros en GenieACS, Prometheus, Grafana y la página web.</p>
+          </div>
+          <span class="section-tag">Recreación en otro PC</span>
+        </div>
+
+        <div class="callout ok">
+          Resultado de la migración: el laboratorio vuelve a funcionar sin instalar Prometheus ni Grafana en Windows, porque ambos se ejecutan como contenedores Docker. El comando final usa los compose principales más los overrides locales <code>docker-compose.tr069-local.yml</code> y <code>docker-compose.web-local.yml</code>.
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Problema encontrado al migrar</th><th>Causa</th><th>Solución aplicada</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>network easymesh-lab_easymesh-net declared as external, but could not be found</code></td>
+                <td>La red Docker externa existía en el PC antiguo, pero no en el nuevo.</td>
+                <td>Crear la red manualmente con subnet <code>172.25.0.0/24</code>.</td>
+              </tr>
+              <tr>
+                <td><code>no configured subnet contains IP address 172.25.0.21</code></td>
+                <td>La red se creó sin la subred esperada por las IPs fijas.</td>
+                <td>Borrar la red y recrearla con gateway <code>172.25.0.1</code>.</td>
+              </tr>
+              <tr>
+                <td><code>tr069-sim</code> esperaba el modelo EasyMesh.</td>
+                <td>El CSV existía en Windows, pero el contenedor no lo veía.</td>
+                <td>Crear <code>docker-compose.tr069-local.yml</code> para montar <code>./tr069-data:/data</code>.</td>
+              </tr>
+              <tr>
+                <td><code>Device.WiFi.DataElements.Network not found</code></td>
+                <td>GenieACS tenía el CPE, pero no los parámetros internos cargados.</td>
+                <td>Enviar tarea <code>getParameterValues</code> generada desde el CSV y reiniciar <code>tr069-sim</code>.</td>
+              </tr>
+              <tr>
+                <td>Grafana sin dashboard.</td>
+                <td>El volumen de Grafana se creó limpio en el PC nuevo.</td>
+                <td>Crear un dashboard por API usando el UID real del datasource Prometheus.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="code-card">
+          <div class="code-head"><strong>1. Crear red Docker correcta</strong><button class="copy">Copiar</button></div>
+          <pre><code>docker network rm easymesh-lab_easymesh-net 2&gt;$null
+
+docker network create `
+  --driver bridge `
+  --subnet 172.25.0.0/24 `
+  --gateway 172.25.0.1 `
+  easymesh-lab_easymesh-net
+
+docker network inspect easymesh-lab_easymesh-net</code></pre>
+        </div>
+
+        <div class="code-card">
+          <div class="code-head"><strong>2. Override local para que tr069-sim vea el CSV</strong><button class="copy">Copiar</button></div>
+          <pre><code>cd C:\EasyMesh-Lab
+
+@'
+services:
+  tr069-sim:
+    volumes:
+      - ./tr069-data:/data
+      - ./tr069-data:/tr069-data
+'@ | Set-Content -Path ".\docker-compose.tr069-local.yml" -Encoding UTF8</code></pre>
+        </div>
+
+        <div class="code-card">
+          <div class="code-head"><strong>3. Override local para la página web</strong><button class="copy">Copiar</button></div>
+          <pre><code>cd C:\EasyMesh-Lab
+
+@'
+services:
+  pag-web:
+    image: nginx:alpine
+    container_name: pag-web
+    ports:
+      - "8181:80"
+    volumes:
+      - ./pag-web:/usr/share/nginx/html:ro
+    networks:
+      easymesh-net:
+        ipv4_address: 172.25.0.60
+    restart: unless-stopped
+
+networks:
+  easymesh-net:
+    external: true
+    name: easymesh-lab_easymesh-net
+'@ | Set-Content -Path ".\docker-compose.web-local.yml" -Encoding UTF8</code></pre>
+        </div>
+
+        <div class="code-card">
+          <div class="code-head"><strong>4. Comando final para levantar el laboratorio migrado</strong><button class="copy">Copiar</button></div>
+          <pre><code>cd C:\EasyMesh-Lab
+
+docker compose `
+  -f docker-compose.yml `
+  -f docker-compose.monitoring.yml `
+  -f docker-compose.simulator.yml `
+  -f docker-compose.tr069-local.yml `
+  -f docker-compose.web-local.yml `
+  up -d --build</code></pre>
+        </div>
+
+        <div class="code-card">
+          <div class="code-head"><strong>5. Validación tras arrancar</strong><button class="copy">Copiar</button></div>
+          <pre><code>curl.exe http://localhost:9200/state
+curl.exe http://localhost:9108/metrics
+curl.exe "http://localhost:9090/api/v1/query?query=genieacs_up"
+curl.exe "http://localhost:9090/api/v1/query?query=easymesh_sim_mobile_qoe_state"
+curl.exe http://localhost:8181</code></pre>
+        </div>
+
+        <div class="card">
+          <h3>Archivos nuevos que deben quedar en el repositorio</h3>
+          <ul>
+            <li><code>docker-compose.tr069-local.yml</code>: monta <code>tr069-data</code> dentro del CPE virtual.</li>
+            <li><code>docker-compose.web-local.yml</code>: levanta la página web en <code>localhost:8181</code>.</li>
+            <li><code>pag-web/index.html</code>: esta página actualizada.</li>
+            <li><code>grafana_dashboard_easymesh_import.json</code>: dashboard de Grafana recreable por API.</li>
+            <li><code>get_dataelements_values.json</code>: tarea GenieACS para cargar valores TR-181/DataElements.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="simuladorfinal" class="panel">
+        <div class="panel-header">
+          <div>
+            <h2>18_simulador_final</h2>
+            <p>Esta sección describe la versión final del simulador usada en el laboratorio migrado. La fuente principal de telemetría es <code class="inline">easymesh-network-simulator</code>, expuesto en el puerto <code class="inline">9200</code>.</p>
+          </div>
+          <span class="section-tag">Simulador + Prometheus + Grafana</span>
+        </div>
+
+        <div class="callout ok">
+          El laboratorio final combina dos familias de métricas: las métricas directas del simulador con prefijo <code>easymesh_sim_*</code> y las métricas extraídas desde GenieACS con prefijo <code>easymesh_*</code>.
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <h3>Ruta directa del simulador</h3>
+            <pre><code>easymesh-network-simulator → Prometheus → Grafana</code></pre>
+            <p>Esta ruta permite ver en tiempo real RSSI, QoE, utilización de radio, backhaul, eventos y estado de escenarios sin pasar por GenieACS.</p>
+          </div>
+          <div class="card">
+            <h3>Ruta ACS/TR-069</h3>
+            <pre><code>easymesh-network-simulator → data_model_easymesh.csv → tr069-sim → GenieACS → genieacs-qoe-exporter → Prometheus → Grafana</code></pre>
+            <p>Esta ruta valida que los datos también pueden representarse como parámetros tipo TR-181/DataElements y ser recogidos por un ACS.</p>
+          </div>
+        </div>
+
+        <div class="code-card">
+          <div class="code-head"><strong>Comprobar que se usa el simulador final</strong><button class="copy">Copiar</button></div>
+          <pre><code>docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" | findstr /i "easymesh-network-simulator"
+
+docker port easymesh-network-simulator
+
+curl.exe http://localhost:9200/state
+
+curl.exe http://localhost:9200/metrics | findstr /i "easymesh_sim"</code></pre>
+        </div>
+
+        <div class="code-card">
+          <div class="code-head"><strong>Métricas Prometheus del simulador final</strong><button class="copy">Copiar</button></div>
+          <pre><code>curl.exe "http://localhost:9090/api/v1/query?query=easymesh_sim_mobile_qoe_state"
+
+curl.exe "http://localhost:9090/api/v1/query?query=easymesh_sim_client_signal_dbm"
+
+curl.exe "http://localhost:9090/api/v1/query?query=easymesh_sim_client_qoe_score"
+
+curl.exe "http://localhost:9090/api/v1/query?query=easymesh_sim_radio_utilization_percent"
+
+curl.exe "http://localhost:9090/api/v1/query?query=easymesh_sim_event_info"</code></pre>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Escenario final</th><th>Comando</th><th>Qué permite validar</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>normal</code></td><td><code>curl.exe "http://localhost:9200/set?scenario=normal"</code></td><td>Estado estable y línea base.</td></tr>
+              <tr><td><code>coverage</code></td><td><code>curl.exe "http://localhost:9200/set?scenario=coverage"</code></td><td>Degradación por baja cobertura.</td></tr>
+              <tr><td><code>interference</code></td><td><code>curl.exe "http://localhost:9200/set?scenario=interference"</code></td><td>Ruido e interferencia radio.</td></tr>
+              <tr><td><code>saturation</code></td><td><code>curl.exe "http://localhost:9200/set?scenario=saturation"</code></td><td>Alta utilización de canal.</td></tr>
+              <tr><td><code>roaming</code></td><td><code>curl.exe "http://localhost:9200/set?scenario=roaming"</code></td><td>Evento <code>ClientSteering</code> de <code>MOVIL_SARA</code>.</td></tr>
+              <tr><td><code>backhaul_degraded</code></td><td><code>curl.exe "http://localhost:9200/set?scenario=backhaul_degraded"</code></td><td>Degradación del enlace entre APs.</td></tr>
+              <tr><td><code>ap_failure</code></td><td><code>curl.exe "http://localhost:9200/set?scenario=ap_failure"</code></td><td>Fallo de punto de acceso.</td></tr>
+              <tr><td><code>mixed</code></td><td><code>curl.exe "http://localhost:9200/set?scenario=mixed"</code></td><td>Condiciones combinadas.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="code-card">
+          <div class="code-head"><strong>Dashboard Grafana recreado por API</strong><button class="copy">Copiar</button></div>
+          <pre><code># Obtener UID real del datasource Prometheus
+$ds = curl.exe -s -u admin:admin http://localhost:3001/api/datasources | ConvertFrom-Json
+$ds | Format-Table id,uid,name,type,url,isDefault
+
+# Abrir dashboard final
+Start-Process "http://localhost:3001/d/easymesh-simulator-final"</code></pre>
+        </div>
+
+        <div class="card">
+          <h3>Qué debe verse en Grafana</h3>
+          <ul>
+            <li><code>GenieACS conectado = 1</code>.</li>
+            <li><code>Agentes EasyMesh = 2</code>.</li>
+            <li><code>Clientes WiFi = 3</code>.</li>
+            <li>RSSI de <code>MOVIL_SARA</code> vía GenieACS.</li>
+            <li>RSSI y QoE Score de clientes desde el simulador final.</li>
+            <li>Utilización radio por AP.</li>
+            <li>Evento EasyMesh actual.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="resultadofinal" class="panel">
+        <div class="panel-header">
+          <div>
+            <h2>19_resultado_final</h2>
+            <p>Esta sección resume el estado final alcanzado después de la migración y las validaciones realizadas. Es la parte que se puede usar como resumen técnico en la memoria del TFG.</p>
+          </div>
+          <span class="section-tag">Resultado final validado</span>
+        </div>
+
+        <div class="callout ok">
+          Resultado final: el laboratorio queda funcionando en el nuevo PC con simulador final, GenieACS, exporter, Prometheus, Grafana y página web. Se validan métricas directas del simulador y métricas recogidas vía TR-069/TR-181.
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Componente</th><th>Resultado final</th><th>Estado</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>easymesh-network-simulator</code></td><td>Expone <code>/state</code> y <code>/metrics</code> en el puerto 9200.</td><td>Validado</td></tr>
+              <tr><td><code>tr069-sim</code></td><td>Lee <code>/data/data_model_easymesh.csv</code> y registra el CPE virtual.</td><td>Validado</td></tr>
+              <tr><td><code>GenieACS</code></td><td>Dispositivo <code>535241-EasyMeshVirtualCPE-200001</code> registrado.</td><td>Validado</td></tr>
+              <tr><td><code>genieacs-qoe-exporter</code></td><td>Devuelve <code>genieacs_up 1</code> y métricas <code>easymesh_*</code>.</td><td>Validado</td></tr>
+              <tr><td><code>Prometheus</code></td><td>Recoge métricas <code>easymesh_*</code> y <code>easymesh_sim_*</code>.</td><td>Validado</td></tr>
+              <tr><td><code>Grafana</code></td><td>Dashboard <code>EasyMesh QoE - Simulador Final</code> con datos.</td><td>Validado</td></tr>
+              <tr><td><code>pag-web</code></td><td>Documentación servida en <code>http://localhost:8181</code>.</td><td>Validado</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="code-card">
+          <div class="code-head"><strong>Salida esperada del exporter final</strong><button class="copy">Copiar</button></div>
+          <pre><code>genieacs_up 1
+easymesh_agent_number 2
+easymesh_total_client_number 3
+easymesh_event_info{type="None",from_device="",to_device="",result="NoEvent"} 1
+easymesh_radio_utilization_avg_percent{ap="AP_SALON",device_index="1"} 35.0
+easymesh_backhaul_rssi_dbm{ap="AP_DORMITORIO",backhaul_type="WiFi-5GHz",device_index="2"} -51
+easymesh_client_signal_strength_dbm{client="MOVIL_SARA",ap="AP_SALON",device_index="1",sta_index="2"} -48
+easymesh_client_qoe_state{client="MOVIL_SARA",ap="AP_SALON",state="Buena"} 3
+easymesh_target_client_found 1</code></pre>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <h3>Frase correcta para la memoria</h3>
+            <p>Se ha implementado un simulador de comportamiento y telemetría EasyMesh orientado a QoE, capaz de modelar una topología gateway + satélites + clientes WiFi, generar métricas compatibles con una estructura tipo TR-181/DataElements y alimentar el pipeline ACS/Prometheus/Grafana.</p>
+          </div>
+          <div class="card">
+            <h3>Precisión técnica</h3>
+            <p>El sistema no debe describirse como una implementación física certificada EasyMesh. La formulación correcta es que se ha simulado una topología EasyMesh y se han representado sus métricas en un modelo de datos gestionable por GenieACS mediante TR-069.</p>
+          </div>
+        </div>
+
+        <div class="code-card">
+          <div class="code-head"><strong>Comprobación final completa</strong><button class="copy">Copiar</button></div>
+          <pre><code>curl.exe http://localhost:9200/state
+
+curl.exe http://localhost:9108/metrics
+
+curl.exe "http://localhost:9090/api/v1/query?query=genieacs_up"
+
+curl.exe "http://localhost:9090/api/v1/query?query=easymesh_client_signal_strength_dbm"
+
+curl.exe "http://localhost:9090/api/v1/query?query=easymesh_sim_mobile_qoe_state"
+
+curl.exe "http://localhost:9090/api/v1/query?query=easymesh_sim_event_info"
+
+curl.exe http://localhost:8181</code></pre>
+        </div>
+
+        <div class="card">
+          <h3>Conclusión final</h3>
+          <p>El laboratorio permite demostrar de extremo a extremo la generación, transporte, exposición y visualización de métricas WiFi/EasyMesh orientadas a QoE. El simulador final genera la dinámica de red y Prometheus/Grafana la visualizan directamente. En paralelo, el CSV tipo TR-181/DataElements permite que el CPE virtual exponga la información a GenieACS, cerrando la validación ACS/TR-069.</p>
+        </div>
+      </section>
+
     </main>
   </div>
 
@@ -3040,7 +4104,7 @@ curl.exe "http://localhost:7557/faults" > C:\EasyMesh-Lab\evidencias\genieacs_fa
     function toggleScenarioAutoplay(){
       const btn=document.getElementById("scenarioPlay");
       if(scenarioAutoTimer){clearInterval(scenarioAutoTimer);scenarioAutoTimer=null;if(btn){btn.classList.remove("playing");btn.textContent="▶ Reproducir validación";}return;}
-      if(btn){btn.classList.add("playing");btn.textContent="⏸ Pausar animación";}
+      if(btn){btn.classList.add("playing");btn.textContent="â¸ Pausar animación";}
       updateScenarioMap("normal");
       scenarioAutoTimer=setInterval(()=>{stepScenario(1);},2600);
     }
@@ -3050,6 +4114,215 @@ curl.exe "http://localhost:7557/faults" > C:\EasyMesh-Lab\evidencias\genieacs_fa
     const scenarioNext=document.getElementById("scenarioNext"); if(scenarioNext) scenarioNext.addEventListener("click",()=>{if(scenarioAutoTimer)toggleScenarioAutoplay();stepScenario(1);});
     const scenarioPlay=document.getElementById("scenarioPlay"); if(scenarioPlay) scenarioPlay.addEventListener("click",toggleScenarioAutoplay);
     updateScenarioMap("normal");
-  </script>
+  
+
+    // Bloque gráfico del simulador final dentro de 13_escenarios
+    const sfgScenarioData = {
+      normal: {
+        title: "Escenario normal",
+        desc: "Estado estable de la red EasyMesh. Los clientes tienen buena señal, la QoE es alta y no hay eventos de degradación.",
+        ap: "AP_SALON",
+        rssi: "-48 dBm",
+        qoe: "100",
+        event: "None",
+        eventText: "None / NoEvent",
+        movilDesc: "Asociado a AP_SALON",
+        signalClass: "",
+        movilClass: "",
+        salonClass: "",
+        dormClass: "",
+        salonDesc: "Backhaul Ethernet · estado correcto",
+        dormDesc: "Backhaul WiFi-5GHz · estado correcto",
+        lines: ["good","good","good","good","good","off","off"],
+        path: "Endpoint del simulador:\nhttp://localhost:9200/state\n\nMétricas principales:\neasymesh_sim_client_signal_dbm\neasymesh_sim_client_qoe_score\neasymesh_sim_radio_utilization_percent\neasymesh_sim_event_info"
+      },
+      coverage: {
+        title: "Escenario de cobertura",
+        desc: "MOVIL_SARA se aleja de la zona de cobertura. El RSSI baja y el estado QoE empeora.",
+        ap: "AP_SALON",
+        rssi: "-74 dBm",
+        qoe: "45",
+        event: "LowRSSI",
+        eventText: "LowRSSI / CandidateForSteering",
+        movilDesc: "Asociado a AP_SALON · cobertura baja",
+        signalClass: "warn",
+        movilClass: "warn",
+        salonClass: "warn",
+        dormClass: "",
+        salonDesc: "Backhaul Ethernet · cliente con baja señal",
+        dormDesc: "Backhaul WiFi-5GHz · estado correcto",
+        lines: ["good","good","good","warn","good","off","off"],
+        path: "Qué cambia:\n- SignalStrength baja\n- QoE Score baja\n- MOVIL_SARA queda como candidato a steering\n\nConsulta Prometheus:\neasymesh_sim_client_signal_dbm{client=\"MOVIL_SARA\"}"
+      },
+      interference: {
+        title: "Escenario de interferencia",
+        desc: "Aparece ruido radio. La conexión sigue activa, pero aumenta el retry rate, el jitter y la pérdida de paquetes.",
+        ap: "AP_SALON",
+        rssi: "-57 dBm",
+        qoe: "62",
+        event: "HighInterference",
+        eventText: "HighInterference / DegradedQoE",
+        movilDesc: "Asociado a AP_SALON · interferencia radio",
+        signalClass: "warn",
+        movilClass: "warn",
+        salonClass: "warn",
+        dormClass: "",
+        salonDesc: "Radio con ruido e interferencia",
+        dormDesc: "Backhaul WiFi-5GHz · estado correcto",
+        lines: ["good","good","warn","warn","good","off","off"],
+        path: "Qué cambia:\n- Sube el ruido\n- Sube retry rate\n- Sube jitter\n- Puede subir packet loss\n\nMétricas:\neasymesh_sim_client_jitter_ms\neasymesh_sim_client_retry_rate_percent\neasymesh_sim_client_packet_loss_percent"
+      },
+      saturation: {
+        title: "Escenario de saturación",
+        desc: "El canal WiFi tiene mucha carga. La utilización radio sube y empeora la latencia.",
+        ap: "AP_SALON",
+        rssi: "-55 dBm",
+        qoe: "58",
+        event: "HighUtilization",
+        eventText: "HighUtilization / ChannelBusy",
+        movilDesc: "Asociado a AP_SALON · canal ocupado",
+        signalClass: "warn",
+        movilClass: "warn",
+        salonClass: "warn",
+        dormClass: "",
+        salonDesc: "Alta utilización radio",
+        dormDesc: "Backhaul WiFi-5GHz · estado correcto",
+        lines: ["good","good","warn","warn","good","off","off"],
+        path: "Qué cambia:\n- Sube radio utilization\n- Sube latencia\n- Puede bajar throughput\n\nMétricas:\neasymesh_sim_radio_utilization_percent\neasymesh_sim_client_latency_ms\neasymesh_sim_client_throughput_down_mbps"
+      },
+      roaming: {
+        title: "Escenario roaming",
+        desc: "MOVIL_SARA cambia de AP_SALON a AP_DORMITORIO. El simulador genera un evento ClientSteering.",
+        ap: "AP_DORMITORIO",
+        rssi: "-49 dBm",
+        qoe: "92",
+        event: "ClientSteering",
+        eventText: "ClientSteering / Success",
+        movilDesc: "Asociado a AP_DORMITORIO",
+        signalClass: "roam",
+        movilClass: "roam",
+        salonClass: "",
+        dormClass: "roam",
+        salonDesc: "Backhaul Ethernet · queda con menos carga",
+        dormDesc: "Backhaul WiFi-5GHz · recibe a MOVIL_SARA",
+        lines: ["good","good","good","off","good","roam","roam"],
+        path: "Qué cambia:\n- MOVIL_SARA pasa a AP_DORMITORIO\n- Mejora SignalStrength\n- Aparece ClientSteering\n\nMétricas:\neasymesh_sim_event_info\neasymesh_sim_client_signal_dbm"
+      },
+      backhaul_degraded: {
+        title: "Escenario backhaul degradado",
+        desc: "El enlace backhaul del AP_DORMITORIO se degrada. Puede haber buena señal WiFi, pero mala salida hacia la red.",
+        ap: "AP_DORMITORIO",
+        rssi: "-52 dBm",
+        qoe: "54",
+        event: "BackhaulDegraded",
+        eventText: "BackhaulDegraded / Warning",
+        movilDesc: "Asociado a AP_DORMITORIO · backhaul degradado",
+        signalClass: "warn",
+        movilClass: "warn",
+        salonClass: "",
+        dormClass: "warn",
+        salonDesc: "Backhaul Ethernet · estado correcto",
+        dormDesc: "Backhaul WiFi-5GHz · degradado",
+        lines: ["good","warn","good","off","warn","warn","off"],
+        path: "Qué cambia:\n- Empeora BackhaulRSSI\n- Sube latencia de backhaul\n- Puede subir packet loss\n\nMétricas:\neasymesh_sim_backhaul_rssi_dbm\neasymesh_sim_backhaul_latency_ms\neasymesh_sim_backhaul_packet_loss_percent"
+      },
+      ap_failure: {
+        title: "Escenario fallo de AP",
+        desc: "Un punto de acceso falla. El simulador refleja pérdida de servicio y clientes afectados.",
+        ap: "Sin servicio estable",
+        rssi: "N/A",
+        qoe: "20",
+        event: "APFailure",
+        eventText: "APFailure / Critical",
+        movilDesc: "Cliente afectado por fallo de AP",
+        signalClass: "bad",
+        movilClass: "bad",
+        salonClass: "bad",
+        dormClass: "",
+        salonDesc: "AP con fallo o servicio no disponible",
+        dormDesc: "Backhaul WiFi-5GHz · operativo",
+        lines: ["bad","good","bad","bad","good","off","off"],
+        path: "Qué cambia:\n- Un AP queda en fallo\n- Clientes afectados pierden calidad\n- Aparece evento APFailure\n\nMétricas:\neasymesh_sim_event_info\neasymesh_sim_client_qoe_score"
+      },
+      mixed: {
+        title: "Escenario mixto",
+        desc: "Se combinan varias degradaciones: cobertura, interferencia, saturación y posible afectación del backhaul.",
+        ap: "Variable",
+        rssi: "-65 dBm",
+        qoe: "40",
+        event: "MixedDegradation",
+        eventText: "MixedDegradation / MultipleIssues",
+        movilDesc: "Cliente con degradación combinada",
+        signalClass: "bad",
+        movilClass: "bad",
+        salonClass: "warn",
+        dormClass: "warn",
+        salonDesc: "Radio con carga e interferencia",
+        dormDesc: "Backhaul parcialmente degradado",
+        lines: ["warn","warn","warn","bad","warn","warn","off"],
+        path: "Qué cambia:\n- RSSI degradado\n- QoE baja\n- Radio utilization alta\n- Puede empeorar backhaul\n\nUso:\nEscenario realista para validar el dashboard final."
+      }
+    };
+
+    function sfgSetText(id, text) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    }
+
+    function sfgSetClass(id, base, extra) {
+      const el = document.getElementById(id);
+      if (el) el.className = (base + " " + (extra || "")).trim();
+    }
+
+    function sfgApplyScenario(key) {
+      const data = sfgScenarioData[key];
+      if (!data) return;
+
+      document.querySelectorAll(".sfg-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.sfgScenario === key);
+      });
+
+      sfgSetText("sfgStageText", key);
+      sfgSetText("sfgScenarioTitle", data.title);
+      sfgSetText("sfgScenarioDesc", data.desc);
+      sfgSetText("sfgKpiAp", data.ap);
+      sfgSetText("sfgKpiRssi", data.rssi);
+      sfgSetText("sfgKpiQoe", data.qoe);
+      sfgSetText("sfgKpiEvent", data.event);
+      sfgSetText("sfgEventText", data.eventText);
+      sfgSetText("sfgMovilDesc", data.movilDesc);
+      sfgSetText("sfgSalonDesc", data.salonDesc);
+      sfgSetText("sfgDormDesc", data.dormDesc);
+      sfgSetText("sfgScenarioPath", data.path);
+      sfgSetText("sfgMovilSignal", data.rssi === "N/A" ? "RSSI N/A" : "RSSI " + data.rssi);
+
+      sfgSetClass("sfgClientMovil", "sfg-node sfg-client2", data.movilClass);
+      sfgSetClass("sfgApSalon", "sfg-node sfg-ap1", data.salonClass);
+      sfgSetClass("sfgApDormitorio", "sfg-node sfg-ap2", data.dormClass);
+      sfgSetClass("sfgMovilSignal", "sfg-signal", data.signalClass);
+
+      const lineIds = [
+        "sfgLineControllerSalon",
+        "sfgLineControllerDorm",
+        "sfgLineSalonPortatil",
+        "sfgLineSalonMovil",
+        "sfgLineDormTablet",
+        "sfgLineDormMovil",
+        "sfgLineRoaming"
+      ];
+
+      lineIds.forEach((id, index) => {
+        const line = document.getElementById(id);
+        if (line) line.setAttribute("class", "sfg-line " + data.lines[index]);
+      });
+    }
+
+    document.querySelectorAll(".sfg-btn").forEach(btn => {
+      btn.addEventListener("click", () => sfgApplyScenario(btn.dataset.sfgScenario));
+    });
+
+    sfgApplyScenario("normal");
+
+</script>
 </body>
 </html>

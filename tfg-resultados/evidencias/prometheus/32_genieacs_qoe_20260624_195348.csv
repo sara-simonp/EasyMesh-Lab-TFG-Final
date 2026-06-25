@@ -1,0 +1,2 @@
+﻿"timestamp_export","query_name","promql","labels","value_timestamp","value"
+"2026-06-24 19:53:49","32_genieacs_qoe","easymesh_client_qoe_state","__name__=easymesh_client_qoe_state;ap=AP_SALON;client=MOVIL_SARA;instance=genieacs-qoe-exporter:9108;job=genieacs-qoe-exporter;state=Buena","1782323629,395","3"

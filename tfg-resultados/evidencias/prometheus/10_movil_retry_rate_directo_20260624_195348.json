@@ -1,0 +1,1 @@
+{"status":"success","data":{"resultType":"vector","result":[{"metric":{"__name__":"easymesh_sim_client_retry_rate_percent","ap":"AP_DORMITORIO","band":"5GHz","client":"MOVIL_SARA","instance":"easymesh-network-simulator:9200","job":"easymesh-network-simulator","service":"mixed"},"value":[1782323628.955,"4"]}]}}

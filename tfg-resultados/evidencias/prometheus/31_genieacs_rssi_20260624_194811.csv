@@ -1,0 +1,2 @@
+﻿"timestamp_export","query_name","promql","labels","value_timestamp","value"
+"2026-06-24 19:48:12","31_genieacs_rssi","easymesh_client_signal_strength_dbm","__name__=easymesh_client_signal_strength_dbm;ap=AP_SALON;client=MOVIL_SARA;device_index=1;instance=genieacs-qoe-exporter:9108;job=genieacs-qoe-exporter;sta_index=2","1782323292,109","-48"

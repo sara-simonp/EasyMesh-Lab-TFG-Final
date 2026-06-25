@@ -1,0 +1,1 @@
+{"status":"success","data":{"resultType":"vector","result":[{"metric":{"__name__":"easymesh_csv_latest_snapshot_timestamp_seconds","file":"data_model_easymesh_interference_20260624_185706.csv","instance":"csv-prometheus-exporter:9210","job":"csv-prometheus-exporter","kind":"tr181","scenario":"interference"},"value":[1782323291.913,"1782320251"]}]}}

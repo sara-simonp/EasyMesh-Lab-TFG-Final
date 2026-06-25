@@ -1,0 +1,1 @@
+{"status":"success","data":{"resultType":"vector","result":[{"metric":{"__name__":"easymesh_sim_client_jitter_ms","ap":"AP_SALON","band":"5GHz","client":"MOVIL_SARA","instance":"easymesh-network-simulator:9200","job":"easymesh-network-simulator","service":"mixed"},"value":[1782323291.651,"6"]}]}}

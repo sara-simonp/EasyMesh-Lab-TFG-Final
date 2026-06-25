@@ -1,0 +1,1 @@
+{"status":"success","data":{"resultType":"vector","result":[{"metric":{"__name__":"easymesh_total_client_number","instance":"genieacs-qoe-exporter:9108","job":"genieacs-qoe-exporter"},"value":[1782323292.090,"3"]}]}}

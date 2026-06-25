@@ -1,0 +1,2 @@
+﻿"timestamp_export","query_name","promql","labels","value_timestamp","value"
+"2026-06-24 19:53:48","04_steering_count","easymesh_sim_steering_count_total","__name__=easymesh_sim_steering_count_total;instance=easymesh-network-simulator:9200;job=easymesh-network-simulator","1782323628,832","4"

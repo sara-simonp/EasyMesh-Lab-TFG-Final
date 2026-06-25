@@ -1,0 +1,2 @@
+﻿"timestamp_export","query_name","promql","labels","value_timestamp","value"
+"2026-06-24 19:53:49","19_csv_exporter_up","easymesh_csv_exporter_up","__name__=easymesh_csv_exporter_up;instance=csv-prometheus-exporter:9210;job=csv-prometheus-exporter","1782323629,140","1"

@@ -1,0 +1,1 @@
+{"status":"success","data":{"resultType":"vector","result":[{"metric":{"__name__":"genieacs_up","instance":"genieacs-qoe-exporter:9108","job":"genieacs-qoe-exporter"},"value":[1782323292.052,"1"]}]}}

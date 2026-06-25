@@ -1,0 +1,1 @@
+{"status":"success","data":{"resultType":"vector","result":[{"metric":{"__name__":"easymesh_simulator_up","instance":"easymesh-network-simulator:9200","job":"easymesh-network-simulator"},"value":[1782323628.726,"1"]}]}}

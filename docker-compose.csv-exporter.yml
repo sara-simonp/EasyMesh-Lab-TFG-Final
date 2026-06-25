@@ -1,0 +1,22 @@
+﻿services:
+  csv-prometheus-exporter:
+    image: python:3.11-slim
+    container_name: csv-prometheus-exporter
+    working_dir: /app
+    command: python /app/csv_exporter.py
+    ports:
+      - "9210:9210"
+    environment:
+      - CSV_DIR=/csv
+      - CSV_EXPORTER_PORT=9210
+    volumes:
+      - ./tools/csv-exporter:/app:ro
+      - ./tfg-resultados/simulador/csv:/csv:ro
+    networks:
+      - easymesh-net
+    restart: unless-stopped
+
+networks:
+  easymesh-net:
+    external: true
+    name: easymesh-lab_easymesh-net

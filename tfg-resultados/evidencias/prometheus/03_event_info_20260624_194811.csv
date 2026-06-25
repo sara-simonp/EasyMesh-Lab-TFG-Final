@@ -1,0 +1,2 @@
+﻿"timestamp_export","query_name","promql","labels","value_timestamp","value"
+"2026-06-24 19:48:11","03_event_info","easymesh_sim_event_info","__name__=easymesh_sim_event_info;from_device=AP_SALON;instance=easymesh-network-simulator:9200;job=easymesh-network-simulator;reason=noise floor increased;result=RadioQualityDegraded;type=HighInterference","1782323291,554","1"

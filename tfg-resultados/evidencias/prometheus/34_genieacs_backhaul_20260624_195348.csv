@@ -1,0 +1,3 @@
+﻿"timestamp_export","query_name","promql","labels","value_timestamp","value"
+"2026-06-24 19:53:49","34_genieacs_backhaul","easymesh_backhaul_rssi_dbm","__name__=easymesh_backhaul_rssi_dbm;ap=AP_SALON;backhaul_type=Ethernet;device_index=1;instance=genieacs-qoe-exporter:9108;job=genieacs-qoe-exporter","1782323629,435","0"
+"2026-06-24 19:53:49","34_genieacs_backhaul","easymesh_backhaul_rssi_dbm","__name__=easymesh_backhaul_rssi_dbm;ap=AP_DORMITORIO;backhaul_type=WiFi-5GHz;device_index=2;instance=genieacs-qoe-exporter:9108;job=genieacs-qoe-exporter","1782323629,435","-51"

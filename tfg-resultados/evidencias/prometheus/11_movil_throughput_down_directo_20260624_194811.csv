@@ -1,0 +1,2 @@
+﻿"timestamp_export","query_name","promql","labels","value_timestamp","value"
+"2026-06-24 19:48:11","11_movil_throughput_down_directo","easymesh_sim_client_throughput_down_mbps{client=""MOVIL_SARA""}","__name__=easymesh_sim_client_throughput_down_mbps;ap=AP_SALON;band=5GHz;client=MOVIL_SARA;instance=easymesh-network-simulator:9200;job=easymesh-network-simulator;service=mixed","1782323291,709","80.1"

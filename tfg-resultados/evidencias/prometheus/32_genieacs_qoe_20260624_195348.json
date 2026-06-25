@@ -1,0 +1,1 @@
+{"status":"success","data":{"resultType":"vector","result":[{"metric":{"__name__":"easymesh_client_qoe_state","ap":"AP_SALON","client":"MOVIL_SARA","instance":"genieacs-qoe-exporter:9108","job":"genieacs-qoe-exporter","state":"Buena"},"value":[1782323629.395,"3"]}]}}

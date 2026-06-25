@@ -1,0 +1,2 @@
+﻿"timestamp_export","query_name","promql","labels","value_timestamp","value"
+"2026-06-24 19:53:49","30_genieacs_clients","easymesh_total_client_number","__name__=easymesh_total_client_number;instance=genieacs-qoe-exporter:9108;job=genieacs-qoe-exporter","1782323629,356","3"
