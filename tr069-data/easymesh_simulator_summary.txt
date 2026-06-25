@@ -1,5 +1,5 @@
 Scenario: interference - Interferencia elevada en AP_SALON por canal solapado.
-Timestamp: 2026-06-25T10:43:22Z
-Mobile: {'client': 'MOVIL_SARA', 'ap': 'AP_SALON', 'signal_strength_dbm': -55.3, 'snr_db': 22.8, 'latency_ms': 22.4, 'jitter_ms': 6.6, 'packet_loss_percent': 0, 'throughput_downlink_mbps': 80.1, 'throughput_uplink_mbps': 27.4, 'qoe_score': 79, 'qoe_state': 'Media', 'qoe_numeric': 3, 'qoe_reason': 'radio cargada'}
-Event: {'type': 'HighInterference', 'from_device': 'AP_SALON', 'to_device': '', 'result': 'RadioQualityDegraded', 'reason': 'noise floor increased', 'client': 'MOVIL_SARA', 'client_mac': 'DE:AD:BE:EF:00:02', 'timestamp_utc': '2026-06-25T10:43:22Z', 'steering_count': 0}
+Timestamp: 2026-06-25T11:17:18Z
+Mobile: {'client': 'MOVIL_SARA', 'ap': 'AP_SALON', 'signal_strength_dbm': -57.3, 'snr_db': 22.7, 'latency_ms': 22.2, 'jitter_ms': 6.2, 'packet_loss_percent': 0, 'throughput_downlink_mbps': 80.1, 'throughput_uplink_mbps': 27.4, 'qoe_score': 81, 'qoe_state': 'Buena', 'qoe_numeric': 4, 'qoe_reason': 'radio cargada'}
+Event: {'type': 'HighInterference', 'from_device': 'AP_SALON', 'to_device': '', 'result': 'RadioQualityDegraded', 'reason': 'noise floor increased', 'client': 'MOVIL_SARA', 'client_mac': 'DE:AD:BE:EF:00:02', 'timestamp_utc': '2026-06-25T11:17:18Z', 'steering_count': 0}
 CSV: /data/data_model_easymesh.csv
