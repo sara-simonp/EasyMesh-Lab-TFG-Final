@@ -1,0 +1,5 @@
+Scenario: saturation - Trafico intensivo y saturacion de radio en el AP principal.
+Timestamp: 2026-07-01T07:49:22Z
+Mobile: {'client': 'MOVIL_SARA', 'ap': 'AP_SALON', 'signal_strength_dbm': -50.6, 'snr_db': 37.7, 'latency_ms': 25.8, 'jitter_ms': 7.4, 'packet_loss_percent': 2.15, 'throughput_downlink_mbps': 169.2, 'throughput_uplink_mbps': 59.6, 'qoe_score': 61, 'qoe_state': 'Media', 'qoe_numeric': 3, 'qoe_reason': 'radio cargada, perdida de paquetes'}
+Event: {'type': 'HighUtilization', 'from_device': 'AP_SALON', 'to_device': '', 'result': 'RadioSaturation', 'reason': 'traffic load high', 'client': 'MOVIL_SARA', 'client_mac': 'DE:AD:BE:EF:00:02', 'timestamp_utc': '2026-07-01T07:49:22Z', 'steering_count': 0}
+CSV: /data/data_model_easymesh.csv

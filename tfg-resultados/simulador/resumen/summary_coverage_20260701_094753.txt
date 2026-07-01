@@ -1,0 +1,5 @@
+Scenario: coverage - El cliente se desplaza hasta zona de cobertura limite.
+Timestamp: 2026-07-01T07:48:22Z
+Mobile: {'client': 'MOVIL_SARA', 'ap': 'AP_SALON', 'signal_strength_dbm': -49.3, 'snr_db': 45.9, 'latency_ms': 9.9, 'jitter_ms': 3.5, 'packet_loss_percent': 0, 'throughput_downlink_mbps': 77.4, 'throughput_uplink_mbps': 26.4, 'qoe_score': 100, 'qoe_state': 'Buena', 'qoe_numeric': 4, 'qoe_reason': 'sin degradacion relevante'}
+Event: {'type': 'None', 'from_device': '', 'to_device': '', 'result': 'NoEvent', 'reason': 'scenario changed', 'client': 'MOVIL_SARA', 'client_mac': 'DE:AD:BE:EF:00:02', 'timestamp_utc': '2026-07-01T07:48:22Z', 'steering_count': 0}
+CSV: /data/data_model_easymesh.csv
