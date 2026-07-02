@@ -1,5 +1,5 @@
-Scenario: normal - Cobertura estable, baja interferencia y baja carga.
-Timestamp: 2026-07-01T09:39:29Z
-Mobile: {'client': 'MOVIL_SARA', 'ap': 'AP_SALON', 'signal_strength_dbm': -49.8, 'snr_db': 45.3, 'latency_ms': 9.2, 'jitter_ms': 3.1, 'packet_loss_percent': 0, 'throughput_downlink_mbps': 72.0, 'throughput_uplink_mbps': 24.5, 'qoe_score': 100, 'qoe_state': 'Buena', 'qoe_numeric': 4, 'qoe_reason': 'sin degradacion relevante'}
-Event: {'type': 'None', 'from_device': '', 'to_device': '', 'result': 'NoEvent', 'reason': 'stable', 'client': 'MOVIL_SARA', 'client_mac': 'DE:AD:BE:EF:00:02', 'timestamp_utc': '2026-07-01T09:39:29Z', 'steering_count': 0}
+Scenario: saturation - Trafico intensivo y saturacion de radio en el AP principal.
+Timestamp: 2026-07-02T11:01:03Z
+Mobile: {'client': 'MOVIL_SARA', 'ap': 'AP_SALON', 'signal_strength_dbm': -51.2, 'snr_db': 36.9, 'latency_ms': 27.7, 'jitter_ms': 9.0, 'packet_loss_percent': 3.13, 'throughput_downlink_mbps': 169.2, 'throughput_uplink_mbps': 59.6, 'qoe_score': 53, 'qoe_state': 'Degradada', 'qoe_numeric': 2, 'qoe_reason': 'radio cargada, perdida de paquetes'}
+Event: {'type': 'HighUtilization', 'from_device': 'AP_SALON', 'to_device': '', 'result': 'RadioSaturation', 'reason': 'traffic load high', 'client': 'MOVIL_SARA', 'client_mac': 'DE:AD:BE:EF:00:02', 'timestamp_utc': '2026-07-02T11:01:03Z', 'steering_count': 40}
 CSV: /data/data_model_easymesh.csv

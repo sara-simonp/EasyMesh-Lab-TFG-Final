@@ -1,0 +1,5 @@
+Scenario: interference - Interferencia elevada en AP_SALON por canal solapado.
+Timestamp: 2026-07-01T10:55:32Z
+Mobile: {'client': 'MOVIL_SARA', 'ap': 'AP_SALON', 'signal_strength_dbm': -57.8, 'snr_db': 19.7, 'latency_ms': 20.8, 'jitter_ms': 5.0, 'packet_loss_percent': 0, 'throughput_downlink_mbps': 44.2, 'throughput_uplink_mbps': 25.0, 'qoe_score': 83, 'qoe_state': 'Buena', 'qoe_numeric': 4, 'qoe_reason': 'radio cargada'}
+Event: {'type': 'HighInterference', 'from_device': 'AP_SALON', 'to_device': '', 'result': 'RadioQualityDegraded', 'reason': 'noise floor increased', 'client': 'MOVIL_SARA', 'client_mac': 'DE:AD:BE:EF:00:02', 'timestamp_utc': '2026-07-01T10:55:32Z', 'steering_count': 13}
+CSV: /data/data_model_easymesh.csv

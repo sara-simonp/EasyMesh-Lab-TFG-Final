@@ -1,0 +1,5 @@
+Scenario: normal - Cobertura estable, baja interferencia y baja carga.
+Timestamp: 2026-07-01T10:35:18Z
+Mobile: {'client': 'MOVIL_SARA', 'ap': 'AP_SALON', 'signal_strength_dbm': -50.6, 'snr_db': 46.6, 'latency_ms': 9.4, 'jitter_ms': 2.4, 'packet_loss_percent': 0, 'throughput_downlink_mbps': 72.0, 'throughput_uplink_mbps': 24.5, 'qoe_score': 100, 'qoe_state': 'Buena', 'qoe_numeric': 4, 'qoe_reason': 'sin degradacion relevante'}
+Event: {'type': 'None', 'from_device': '', 'to_device': '', 'result': 'NoEvent', 'reason': 'stable', 'client': 'MOVIL_SARA', 'client_mac': 'DE:AD:BE:EF:00:02', 'timestamp_utc': '2026-07-01T10:35:18Z', 'steering_count': 0}
+CSV: /data/data_model_easymesh.csv

@@ -139,10 +139,8 @@ services:
     cap_add:
       - NET_ADMIN
       - NET_RAW
-    # networks:
-    # easymesh-net:
-    # ipv4_address: 172.25.0.30
-    network_mode: host
+    networks:
+      - easymesh-net
     volumes:
       - ./captures:/data
     depends_on:
@@ -150,17 +148,18 @@ services:
     command:
       [
         "-i",
-        "br-easymesh",
-        "-w",
-        "/data/sniffer.pcap",
+        "any",
+        "-nn",
         "-s",
         "0",
-        "-c",
-        "10000",
+        "-U",
+        "-w",
+        "/data/sniffer.pcap",
+        "tcp",
+        "port",
+        "7547"
       ]
-    # command:
-    #  ["-i", "br-sdnnet", "-w", "/data/sniffer.pcap", "-s", "0", "-c", "10000"]
-    restart: unless-stopped
+    restart: "no"
 
   # ---------------------------------------------------------
   # tr-069 - Simulador de TR-069 para pruebas de ACS
@@ -182,10 +181,5 @@ volumes:
 
 networks:
   easymesh-net:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.25.0.0/24
-          gateway: 172.25.0.1
-    driver_opts:
-      com.docker.network.bridge.name: br-easymesh
+    external: true
+    name: easymesh-lab_easymesh-net

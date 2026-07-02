@@ -1,0 +1,5 @@
+Scenario: roaming - Movimiento de MOVIL_SARA y steering hacia el satelite.
+Timestamp: 2026-07-01T10:45:20Z
+Mobile: {'client': 'MOVIL_SARA', 'ap': 'AP_DORMITORIO', 'signal_strength_dbm': -46.2, 'snr_db': 48.5, 'latency_ms': 9.3, 'jitter_ms': 3.1, 'packet_loss_percent': 0, 'throughput_downlink_mbps': 85.5, 'throughput_uplink_mbps': 29.4, 'qoe_score': 100, 'qoe_state': 'Buena', 'qoe_numeric': 4, 'qoe_reason': 'sin degradacion relevante'}
+Event: {'type': 'ClientSteering', 'from_device': 'AP_SALON', 'to_device': 'AP_DORMITORIO', 'result': 'Success', 'reason': 'target RSSI -53.5 dBm vs current -69.9 dBm', 'client': 'MOVIL_SARA', 'client_mac': 'DE:AD:BE:EF:00:02', 'timestamp_utc': '2026-07-01T10:45:20Z', 'steering_count': 7}
+CSV: /data/data_model_easymesh.csv

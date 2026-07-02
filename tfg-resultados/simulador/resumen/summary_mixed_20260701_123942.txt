@@ -1,0 +1,5 @@
+Scenario: mixed - Interferencia elevada en AP_SALON por canal solapado.
+Timestamp: 2026-07-01T10:40:39Z
+Mobile: {'client': 'MOVIL_SARA', 'ap': 'AP_SALON', 'signal_strength_dbm': -55.7, 'snr_db': 23.4, 'latency_ms': 21.6, 'jitter_ms': 6.1, 'packet_loss_percent': 0.01, 'throughput_downlink_mbps': 80.1, 'throughput_uplink_mbps': 27.4, 'qoe_score': 79, 'qoe_state': 'Media', 'qoe_numeric': 3, 'qoe_reason': 'radio cargada'}
+Event: {'type': 'ClientSteering', 'from_device': 'AP_DORMITORIO', 'to_device': 'AP_SALON', 'result': 'Success', 'reason': 'target RSSI -57.3 dBm vs current -70.8 dBm', 'client': 'MOVIL_SARA', 'client_mac': 'DE:AD:BE:EF:00:02', 'timestamp_utc': '2026-07-01T10:40:39Z', 'steering_count': 3}
+CSV: /data/data_model_easymesh.csv

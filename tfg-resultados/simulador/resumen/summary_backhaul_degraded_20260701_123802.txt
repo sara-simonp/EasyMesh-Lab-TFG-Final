@@ -1,0 +1,5 @@
+Scenario: backhaul_degraded - Backhaul WiFi del satelite degradado: peor RSSI, mas latencia y perdida.
+Timestamp: 2026-07-01T10:38:29Z
+Mobile: {'client': 'MOVIL_SARA', 'ap': 'AP_DORMITORIO', 'signal_strength_dbm': -44.9, 'snr_db': 48.3, 'latency_ms': 30.8, 'jitter_ms': 8.9, 'packet_loss_percent': 3.4, 'throughput_downlink_mbps': 69.5, 'throughput_uplink_mbps': 24.9, 'qoe_score': 76, 'qoe_state': 'Media', 'qoe_numeric': 3, 'qoe_reason': 'perdida de paquetes'}
+Event: {'type': 'BackhaulDegraded', 'from_device': 'AP_DORMITORIO', 'to_device': 'GW_MASTER', 'result': 'QoEImpact', 'reason': 'weak wireless backhaul', 'client': 'MOVIL_SARA', 'client_mac': 'DE:AD:BE:EF:00:02', 'timestamp_utc': '2026-07-01T10:38:29Z', 'steering_count': 1}
+CSV: /data/data_model_easymesh.csv
