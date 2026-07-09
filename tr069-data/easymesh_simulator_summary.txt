@@ -1,5 +1,5 @@
-Scenario: interference - Interferencia elevada en AP_SALON por canal solapado.
-Timestamp: 2026-07-04T11:54:21Z
-Mobile: {'client': 'MOVIL_SARA', 'ap': 'AP_SALON', 'signal_strength_dbm': -55.4, 'snr_db': 22.4, 'latency_ms': 20.6, 'jitter_ms': 7.0, 'packet_loss_percent': 0, 'throughput_downlink_mbps': 80.1, 'throughput_uplink_mbps': 27.4, 'qoe_score': 80, 'qoe_state': 'Buena', 'qoe_numeric': 4, 'qoe_reason': 'radio cargada'}
-Event: {'type': 'HighInterference', 'from_device': 'AP_SALON', 'to_device': '', 'result': 'RadioQualityDegraded', 'reason': 'noise floor increased', 'client': 'MOVIL_SARA', 'client_mac': 'DE:AD:BE:EF:00:02', 'timestamp_utc': '2026-07-04T11:54:21Z', 'steering_count': 0}
+Scenario: coverage - El cliente se desplaza hasta zona de cobertura limite.
+Timestamp: 2026-07-09T19:22:36Z
+Mobile: {'client': 'MOVIL_SARA', 'ap': 'AP_DORMITORIO', 'signal_strength_dbm': -49.5, 'snr_db': 46.0, 'latency_ms': 10.8, 'jitter_ms': 3.4, 'packet_loss_percent': 0, 'throughput_downlink_mbps': 77.4, 'throughput_uplink_mbps': 26.4, 'qoe_score': 100, 'qoe_state': 'Buena', 'qoe_numeric': 4, 'qoe_reason': 'sin degradacion relevante'}
+Event: {'type': 'ClientSteering', 'from_device': 'AP_SALON', 'to_device': 'AP_DORMITORIO', 'result': 'Success', 'reason': 'target RSSI -52.4 dBm vs current -70.4 dBm', 'client': 'MOVIL_SARA', 'client_mac': 'DE:AD:BE:EF:00:02', 'timestamp_utc': '2026-07-09T19:22:36Z', 'steering_count': 205}
 CSV: /data/data_model_easymesh.csv

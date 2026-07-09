@@ -1,0 +1,108 @@
+version: "3.8"
+
+services:
+  mongo:
+    container_name: mongo-db
+    image: mongo:5.0
+    restart: unless-stopped
+    volumes:
+      - mongo_real_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mongosh -u admin -p admin --authenticationDatabase admin --eval \"db.adminCommand('ping')\""
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    container_name: redis-cache
+    image: redis:7-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  genieacs:
+    build:
+      context: ../../genieacs
+      dockerfile: Dockerfile
+    container_name: genieacs-acs
+    restart: unless-stopped
+    ports:
+      - "7547:7547"
+      - "7557:7557"
+      - "7567:7567"
+      - "3000:3000"
+    environment:
+      GENIEACS_MONGODB_CONNECTION_URL: mongodb://admin:admin@mongo:27017/genieacs?authSource=admin
+      GENIEACS_UI_JWT_SECRET: real_hx141_lab_secret_change_me
+      GENIEACS_CWMP_INTERFACE: 0.0.0.0
+      GENIEACS_NBI_INTERFACE: 0.0.0.0
+      GENIEACS_FS_INTERFACE: 0.0.0.0
+      GENIEACS_UI_INTERFACE: 0.0.0.0
+      GENIEACS_CWMP_PORT: 7547
+      GENIEACS_NBI_PORT: 7557
+      GENIEACS_FS_PORT: 7567
+      GENIEACS_UI_PORT: 3000
+    volumes:
+      - ../../genieacs/config:/opt/genieacs/ext
+      - genieacs_real_logs:/var/log/genieacs
+    depends_on:
+      mongo:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  genieacs-qoe-exporter:
+    build:
+      context: ../../monitoring/qoe-exporter
+      dockerfile: Dockerfile
+    container_name: genieacs-qoe-exporter
+    restart: unless-stopped
+    ports:
+      - "9108:9108"
+    environment:
+      GENIEACS_NBI_URL: http://genieacs:7557
+    depends_on:
+      - genieacs
+
+  prometheus-monitoring:
+    image: prom/prometheus:latest
+    container_name: prometheus-monitoring
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.real.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      - genieacs-qoe-exporter
+
+  grafana-monitoring:
+    image: grafana/grafana:latest
+    container_name: grafana-monitoring
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    volumes:
+      - ../../monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ../../monitoring/grafana/dashboards:/var/lib/grafana/dashboards
+      - grafana_real_data:/var/lib/grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    depends_on:
+      - prometheus-monitoring
+
+volumes:
+  mongo_real_data:
+  genieacs_real_logs:
+  grafana_real_data:

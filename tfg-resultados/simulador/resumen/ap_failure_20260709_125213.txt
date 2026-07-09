@@ -1,0 +1,5 @@
+Scenario: ap_failure - Fallo del satelite: clientes forzados al AP principal con peor cobertura.
+Timestamp: 2026-07-09T10:52:08Z
+Mobile: {'client': 'MOVIL_SARA', 'ap': 'AP_SALON', 'signal_strength_dbm': -70.6, 'snr_db': 21.0, 'latency_ms': 33.0, 'jitter_ms': 5.5, 'packet_loss_percent': 0.36, 'throughput_downlink_mbps': 92.6, 'throughput_uplink_mbps': 32.3, 'qoe_score': 56, 'qoe_state': 'Degradada', 'qoe_numeric': 2, 'qoe_reason': 'RSSI bajo, radio cargada'}
+Event: {'type': 'APFailure', 'from_device': 'AP_DORMITORIO', 'to_device': '', 'result': 'ClientsReassociated', 'reason': 'satellite offline', 'client': 'MOVIL_SARA', 'client_mac': 'DE:AD:BE:EF:00:02', 'timestamp_utc': '2026-07-09T10:52:08Z', 'steering_count': 30}
+CSV: /data/data_model_easymesh.csv
