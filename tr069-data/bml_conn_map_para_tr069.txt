@@ -1,6 +1,9 @@
 mesg: ttyname failed: Inappropriate ioctl for device
-ERROR 15:46:43:586 <140652584073280> bml_internal.cpp[343] --> Failed connecting to Beerocks Platform Manager: connect() to /tmp/beerocks/uds_platform_manager failed: No such file or directory
-ERROR 15:46:43:586 <140652584073280> bml_internal.cpp[216] --> connect - connect_to_platform failed!
-ERROR 15:46:43:586 <140652584073280> bml.cpp[50] --> bml_connect - pBML->connect failed
-bml_connect: return value is: BML_RET_CONNECT_FAIL, Connection to Beerocks failed
-cli_bml: Can't connect to master, exit...
+bml_connect: return value is: BML_RET_OK, Success status
+bml_nw_map_query: return value is: BML_RET_OK, Success status
+
+GW_BRIDGE: name: GW_MASTER, mac: 82:3c:16:08:cd:41, ipv4: 0.0.0.0
+    ETHERNET: mac: 82:3c:16:08:cd:42
+    RADIO: wlan0 mac: 82:e5:10:e5:e5:aa, ch: 1, bw: 40L, freq: 2412MHz
+    RADIO: wlan2 mac: 6a:06:9e:96:80:65, ch: 149, bw: 80H, freq: 5745MHz
+bml_disconnect: return value is: BML_RET_OK, Success status

@@ -1,0 +1,65 @@
+services:
+  mongo-real:
+    container_name: hx141-mongo-db
+    image: mongo:5.0
+    restart: unless-stopped
+    volumes:
+      - hx141_mongo_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mongosh -u admin -p admin --authenticationDatabase admin --eval \"db.adminCommand('ping')\""
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis-real:
+    container_name: hx141-redis-cache
+    image: redis:7-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  genieacs-real:
+    build:
+      context: ../../genieacs
+      dockerfile: Dockerfile
+    container_name: hx141-genieacs-acs
+    restart: unless-stopped
+    ports:
+      - "7548:7547"
+      - "7558:7557"
+      - "7568:7567"
+      - "3010:3000"
+      - "8082:8080"
+    environment:
+      GENIEACS_MONGODB_CONNECTION_URL: mongodb://admin:admin@mongo-real:27017/genieacs?authSource=admin
+      GENIEACS_UI_JWT_SECRET: hx141_real_lab_secret
+      GENIEACS_CWMP_INTERFACE: 0.0.0.0
+      GENIEACS_NBI_INTERFACE: 0.0.0.0
+      GENIEACS_FS_INTERFACE: 0.0.0.0
+      GENIEACS_UI_INTERFACE: 0.0.0.0
+      GENIEACS_CWMP_PORT: 7547
+      GENIEACS_NBI_PORT: 7557
+      GENIEACS_FS_PORT: 7567
+      GENIEACS_UI_PORT: 3000
+    volumes:
+      - ../../genieacs/config:/opt/genieacs/ext
+      - hx141_genieacs_logs:/var/log/genieacs
+    depends_on:
+      mongo-real:
+        condition: service_healthy
+      redis-real:
+        condition: service_healthy
+
+volumes:
+  hx141_mongo_data:
+  hx141_genieacs_logs:

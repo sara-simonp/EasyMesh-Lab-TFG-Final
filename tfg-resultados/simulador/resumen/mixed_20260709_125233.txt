@@ -1,0 +1,5 @@
+Scenario: mixed - Cobertura estable, baja interferencia y baja carga.
+Timestamp: 2026-07-09T10:52:28Z
+Mobile: {'client': 'MOVIL_SARA', 'ap': 'AP_SALON', 'signal_strength_dbm': -50.0, 'snr_db': 46.7, 'latency_ms': 8.4, 'jitter_ms': 3.2, 'packet_loss_percent': 0, 'throughput_downlink_mbps': 72.0, 'throughput_uplink_mbps': 24.5, 'qoe_score': 100, 'qoe_state': 'Buena', 'qoe_numeric': 4, 'qoe_reason': 'sin degradacion relevante'}
+Event: {'type': 'ClientSteering', 'from_device': 'AP_DORMITORIO', 'to_device': 'AP_SALON', 'result': 'Success', 'reason': 'target RSSI -49.1 dBm vs current -68.2 dBm', 'client': 'MOVIL_SARA', 'client_mac': 'DE:AD:BE:EF:00:02', 'timestamp_utc': '2026-07-09T10:52:28Z', 'steering_count': 32}
+CSV: /data/data_model_easymesh.csv

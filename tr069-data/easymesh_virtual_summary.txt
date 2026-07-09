@@ -2,6 +2,6 @@ Escenario: steering - Steering simulado de MOVIL_SARA hacia AP_DORMITORIO
 Controller: GW_MASTER (06:8e:01:be:ef:29)
 Agentes: 2
 Clientes: 3
-Actualizado: 2026-06-16T15:46:44Z
+Actualizado: 2026-07-09T10:16:35Z
 CSV: /data/data_model_easymesh.csv
 BML: /data/bml_conn_map_para_tr069.txt
