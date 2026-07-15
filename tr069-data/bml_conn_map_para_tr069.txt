@@ -2,8 +2,5 @@ mesg: ttyname failed: Inappropriate ioctl for device
 bml_connect: return value is: BML_RET_OK, Success status
 bml_nw_map_query: return value is: BML_RET_OK, Success status
 
-GW_BRIDGE: name: GW_MASTER, mac: 82:3c:16:08:cd:41, ipv4: 0.0.0.0
-    ETHERNET: mac: 82:3c:16:08:cd:42
-    RADIO: wlan0 mac: 82:e5:10:e5:e5:aa, ch: 1, bw: 40L, freq: 2412MHz
-    RADIO: wlan2 mac: 6a:06:9e:96:80:65, ch: 149, bw: 80H, freq: 5745MHz
+Connection map is empty...
 bml_disconnect: return value is: BML_RET_OK, Success status
