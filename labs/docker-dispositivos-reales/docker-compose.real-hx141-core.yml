@@ -59,6 +59,45 @@ services:
       redis-real:
         condition: service_healthy
 
+  # ---------------------------------------------------------
+  # Captura de tráfico CWMP/TR-069
+  # ---------------------------------------------------------
+  sniffer:
+    container_name: hx141-sniffer-cwmp
+    image: corfr/tcpdump
+    restart: "no"
+
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+
+    # Comparte el espacio de red de GenieACS.
+    # Por eso se captura el puerto interno 7547,
+    # no el puerto 7548 publicado en Windows.
+    network_mode: "service:genieacs-real"
+
+    volumes:
+      - ./captures:/data
+
+    depends_on:
+      genieacs-real:
+        condition: service_started
+
+    command:
+      - "-i"
+      - "any"
+      - "-nn"
+      - "-s"
+      - "0"
+      - "-U"
+      - "-w"
+      - "/data/cwmp_hx141.pcap"
+      - "-c"
+      - "10000"
+      - "tcp"
+      - "port"
+      - "7547"
+
 volumes:
   hx141_mongo_data:
   hx141_genieacs_logs:
