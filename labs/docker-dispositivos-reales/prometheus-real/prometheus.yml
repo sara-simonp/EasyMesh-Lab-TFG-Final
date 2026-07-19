@@ -1,0 +1,17 @@
+﻿global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: "hx141-real"
+    metrics_path: /metrics
+    scrape_interval: 15s
+    scrape_timeout: 10s
+    static_configs:
+      - targets:
+          - "hx141-exporter:9108"
+
+  - job_name: "prometheus-real"
+    static_configs:
+      - targets:
+          - "localhost:9090"

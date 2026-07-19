@@ -97,7 +97,92 @@ services:
       - "tcp"
       - "port"
       - "7547"
+  
+    # ---------------------------------------------------------
+  # Exportador Prometheus para el HX141 real
+  # ---------------------------------------------------------
+  hx141-exporter:
+    container_name: hx141-prometheus-exporter
+    build:
+      context: ./exporter-real
+      dockerfile: Dockerfile
+    restart: unless-stopped
+
+    environment:
+      GENIEACS_NBI_URL: http://genieacs-real:7557
+      GENIEACS_DEVICE_ID: 105A95-HX141-225A154001356
+      EXPORTER_PORT: "9108"
+      ONLINE_MAX_AGE_SECONDS: "600"
+
+      HX141_NODE_NAMES: >-
+        {"10:5A:95:29:7D:B5":"CONTROLLER","10:5A:95:29:71:AC":"AGENTE-1","10:5A:95:29:7B:E4":"AGENTE-2"}
+
+    ports:
+      - "9109:9108"
+
+    depends_on:
+      genieacs-real:
+        condition: service_started
+  
+    # ---------------------------------------------------------
+  # Prometheus del laboratorio HX141 real
+  # ---------------------------------------------------------
+  prometheus-real:
+    container_name: hx141-prometheus
+    image: prom/prometheus:latest
+    restart: unless-stopped
+
+    ports:
+      - "9091:9090"
+
+    volumes:
+      - type: bind
+        source: ./prometheus-real/prometheus.yml
+        target: /etc/prometheus/prometheus.yml
+        read_only: true
+        bind:
+          create_host_path: false
+
+      - type: volume
+        source: hx141_prometheus_data
+        target: /prometheus
+
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.enable-lifecycle"
+
+    depends_on:
+      hx141-exporter:
+        condition: service_started
+
+  # ---------------------------------------------------------
+  # Grafana del laboratorio HX141 real
+  # ---------------------------------------------------------
+  grafana-real:
+    container_name: hx141-grafana
+    image: grafana/grafana:latest
+    restart: unless-stopped
+
+    ports:
+      - "3002:3000"
+
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_USERS_ALLOW_SIGN_UP: "false"
+
+    volumes:
+      - ./grafana-real/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana-real/dashboards:/var/lib/grafana/dashboards:ro
+      - hx141_grafana_data:/var/lib/grafana
+
+    depends_on:
+      prometheus-real:
+        condition: service_started
 
 volumes:
   hx141_mongo_data:
   hx141_genieacs_logs:
+  hx141_prometheus_data:
+  hx141_grafana_data:
